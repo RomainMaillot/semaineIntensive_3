@@ -67,6 +67,13 @@
     grid-area: corridor6;
 }
 
+.corridor7 {
+    grid-area: corridor7;
+}
+.corridor8 {
+    grid-area: corridor8;
+}
+
 /* AUTRES REGLES DE STYLE */
 
 div[class^=lane], div[class^=corridor]{
