@@ -8,9 +8,51 @@ init()
 function init(){
   //on initialise le jeux
   createCharacter()
+  initMap()
 
 }
 
+function initMap() {
+    let map = "" //chaîne de caractère contenant la disposition du terrain
+
+    let fullLane, laneNum = 1, emptyLane = "", corNum = 1
+
+    //remplissage de la string
+    for (let i = 0; i < 4; i++) {
+        fullLane = ""
+        emptyLane = ""
+        for (let j = 0; j < 60; j++) {
+            fullLane += `lane${laneNum} `
+        }
+        map += `"${fullLane}"`
+        map += '\n'
+        laneNum++
+
+        for (let j = 0; j < 60; j++) {
+            let randomChara = Math.floor(Math.random() * 31)
+            
+            if ((randomChara >= 29 || emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ") && emptyLane.substring(0, emptyLane.length).includes(`corridor${i * 2}`) === false ) {
+                emptyLane += `corridor${corNum}`
+                corNum++
+            } else  {
+                emptyLane += '. '
+            }
+        }
+        map += `"${emptyLane}"`
+        map += '\n'
+        console.log(emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1))
+    }
+
+    fullLane = ""
+    for (let j = 0; j < 60; j++) {
+        fullLane += `lane${laneNum} `
+    }
+    map += `"${fullLane}"`
+
+    console.log(map)
+
+    $('.map').css('grid-template-areas', map)
+}
 
   window.addEventListener('keydown', function(e){
     //on gère les déplacements du personnage en fonction de la touche
