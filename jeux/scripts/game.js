@@ -67,7 +67,7 @@ function initMap() {
             
             if (
                     (randomChara >= 29 || 
-                    j - lastPos[corNum - 1] > 20 &&
+                    j - lastPos[corNum - 1] > 25) &&
                     emptyLane.substring(0, emptyLane.length).includes(`corridor${(i+1) * 3}`) === false &&
                     (j - lastPos[corNum - 1] > 6 || lastPos[corNum - 1] - j > 6)
                     
