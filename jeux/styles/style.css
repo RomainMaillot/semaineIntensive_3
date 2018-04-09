@@ -9,7 +9,7 @@
     width: 300%;
     height: 90vh;
     grid-template-columns: repeat(60, calc(100% / 60));
-    grid-template-rows: repeat(11, calc(100% / 11));
+    grid-template-rows: 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr 10px;
     grid-gap: 0;
     grid-template-areas:
         "lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1"
@@ -71,4 +71,13 @@
 
 div[class^=lane], div[class^=corridor]{
     background: yellowgreen;
+}
+
+div[class^=lane] {
+    background-image: url('../images/lane_background.png');
+    background-size: contain;
+}
+
+div[class^=corridor]{
+    z-index: 1000;
 }
