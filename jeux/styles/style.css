@@ -10,7 +10,7 @@
     width: 300%;
     height: 90vh;
     grid-template-columns: repeat(60, calc(100% / 60));
-    grid-template-rows: 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr 10px;
+    grid-template-rows: 1fr 10px 1fr 10px 1fr 10px 1fr;
     grid-gap: 0;
     grid-template-areas:
         "lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1"
@@ -21,8 +21,6 @@
         ". . . corridor4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . corridor5 . . . . . . . . . . . . . . . . . . . . . ."
         "lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4"
         ". . . corridor6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
-        "lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5"
-        ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
 }
 
 .lane1{
@@ -67,6 +65,15 @@
 .corridor6 {
     grid-area: corridor6;
 }
+.corridor7 {
+    grid-area: corridor7;
+}
+.corridor8 {
+    grid-area: corridor8;
+}
+.corridor9 {
+    grid-area: corridor9;
+}
 
 /* AUTRES REGLES DE STYLE */
 
@@ -87,11 +94,11 @@ div[class^=corridor]{
 div[class^=corridor] img:first-of-type{
     position: relative;
     height: 90px;
-    bottom: 1100%;
+    bottom: 1200%;
 }
 
 div[class^=corridor] img:nth-of-type(2){
     position: relative;
     height: 90px;
-    bottom: 300%;
+    bottom: -50%;
 }
