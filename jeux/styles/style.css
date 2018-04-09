@@ -1,1 +1,74 @@
+/* CONSTRUCTION DE LA GRILLE */
 
+.map{
+    margin-top: 50px; 
+    border-left: 2px solid #7D3232;
+    border-top: 2px solid #7D3232;
+    border-bottom: 2px solid #7D3232;
+    display: grid;
+    width: 300%;
+    height: 90vh;
+    grid-template-columns: repeat(60, calc(100% / 60));
+    grid-template-rows: repeat(11, calc(100% / 11));
+    grid-gap: 0;
+    grid-template-areas:
+        "lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1"
+        ". . . . . corridor1 . . . . . . . . . . . . . . . . . . . . . . . . . corridor2 . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+        "lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2"
+        ". . . . . . . . . . . . . . . . . . . . . . . . . . . . corridor3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+        "lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3"
+        ". . . . . . . . . . . . corridor4 . . . . . . . . . . . . . . . . . . . . . . . . corridor5 . . . . . . . . . . . . . . . . . . . . . ."
+        "lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4"
+        ". . . . . . . . . . . . . . . . . . . . . corridor6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+        "lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5"
+        ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
+}
+
+.lane1{
+    grid-area: lane1;
+}
+
+.lane2{
+    grid-area: lane2;
+}
+
+.lane3{
+    grid-area: lane3;
+}
+
+.lane4{
+    grid-area: lane4;
+}
+.lane5{
+    grid-area: lane5;
+}
+
+.corridor1 {
+    grid-area: corridor1;
+}
+
+.corridor2 {
+    grid-area: corridor2;
+}
+
+.corridor3 {
+    grid-area: corridor3;
+}
+
+.corridor4 {
+    grid-area: corridor4;
+}
+
+.corridor5 {
+    grid-area: corridor5;
+}
+
+.corridor6 {
+    grid-area: corridor6;
+}
+
+/* AUTRES REGLES DE STYLE */
+
+div[class^=lane], div[class^=corridor]{
+    background: yellowgreen;
+}
