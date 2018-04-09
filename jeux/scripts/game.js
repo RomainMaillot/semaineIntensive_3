@@ -47,9 +47,13 @@ function initMap() {
     let fullLane, laneNum = 1, emptyLane = "", corNum = 1
 
     //remplissage de la string
-    for (let i = 0; i < 4; i++) {
+
+    let lastPos
+
+    for (let i = 0; i < 3; i++) {
         fullLane = ""
         emptyLane = ""
+        lastPos = 0
         for (let j = 0; j < 60; j++) {
             fullLane += `lane${laneNum} `
         }
@@ -58,19 +62,21 @@ function initMap() {
         laneNum++
 
         for (let j = 0; j < 60; j++) {
-            let randomChara = Math.floor(Math.random() * 80 )
+            let randomChara = Math.floor(Math.random() * 30)
+
+            console.log(emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ")            
             
-            if (randomChara >= 29 || emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ") {
-                console.log(emptyLane.substring(0, emptyLane.length).includes(`corridor${i * 2}`))
-                emptyLane += `corridor${corNum}`
+            if ((randomChara >= 29 || emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ") && emptyLane.substring(0, emptyLane.length).includes(`corridor${(i+1) * 3}`) === false && emptyLane.substring(emptyLane.length - 20, emptyLane.length + 1).includes('corridors') === false && j - lastPos > 6){
+                // console.log(emptyLane.substring(0, emptyLane.length).includes(`corridor${(i+1) * 2}`))
+                emptyLane += `corridor${corNum} `
                 corNum++
+                lastPos = j
             } else  {
                 emptyLane += '. '
             }
         }
         map += `"${emptyLane}"`
         map += '\n'
-        console.log(emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1))
     }
 
     fullLane = ""
@@ -79,10 +85,10 @@ function initMap() {
     }
     map += `"${fullLane}"`
 
-    console.log(map)
-
     $('.map').css('grid-template-areas', map)
 }
+
+initMap()
 
 // function initMap() {
 //     let odlCorr, corrNum = 1

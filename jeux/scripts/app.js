@@ -11,7 +11,7 @@ function init(){
   perso.style.position = 'absolute'
   perso.style.left = left + 'px'
 
-  lane[(Math.floor(Math.random()*5))].appendChild(perso)
+  lane[(Math.floor(Math.random()*4))].appendChild(perso)
 
   game()
 }
