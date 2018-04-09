@@ -58,9 +58,10 @@ function initMap() {
         laneNum++
 
         for (let j = 0; j < 60; j++) {
-            let randomChara = Math.floor(Math.random() * 31)
+            let randomChara = Math.floor(Math.random() * 80 )
             
-            if ((randomChara >= 29 || emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ") && emptyLane.substring(0, emptyLane.length).includes(`corridor${i * 2}`) === false && emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . ") {
+            if ((randomChara >= 29 || emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ") && emptyLane.substring(0, emptyLane.length).includes(`corridor${i * 2}`) === false) {
+                console.log(emptyLane.substring(0, emptyLane.length).includes(`corridor${i * 2}`))
                 emptyLane += `corridor${corNum}`
                 corNum++
             } else  {
