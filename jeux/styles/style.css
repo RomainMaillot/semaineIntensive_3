@@ -1,7 +1,8 @@
 /* CONSTRUCTION DE LA GRILLE */
 
 .map{
-    margin-top: 50px; 
+    background: #bcc3c6;
+    margin-top: 50px;
     border-left: 2px solid #7D3232;
     border-top: 2px solid #7D3232;
     border-bottom: 2px solid #7D3232;
@@ -15,11 +16,11 @@
         "lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1 lane1"
         ". . . . . corridor1 . . . . . . . . . . . . . . . . . . . . . . . . . corridor2 . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
         "lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2 lane2"
-        ". . . . . . . . . . . . . . . . . . . . . . . . . . . . corridor3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+        ". . . . corridor3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
         "lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3 lane3"
-        ". . . . . . . . . . . . corridor4 . . . . . . . . . . . . . . . . . . . . . . . . corridor5 . . . . . . . . . . . . . . . . . . . . . ."
+        ". . . corridor4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . corridor5 . . . . . . . . . . . . . . . . . . . . . ."
         "lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4 lane4"
-        ". . . . . . . . . . . . . . . . . . . . . corridor6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+        ". . . corridor6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
         "lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5 lane5"
         ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
 }
@@ -70,7 +71,8 @@
 /* AUTRES REGLES DE STYLE */
 
 div[class^=lane], div[class^=corridor]{
-    background: yellowgreen;
+    background: #bcc3c6;
+    position: relative;
 }
 
 div[class^=lane] {
@@ -80,4 +82,16 @@ div[class^=lane] {
 
 div[class^=corridor]{
     z-index: 1000;
+}
+
+div[class^=corridor] img:first-of-type{
+    position: relative;
+    height: 90px;
+    bottom: 1100%;
+}
+
+div[class^=corridor] img:nth-of-type(2){
+    position: relative;
+    height: 90px;
+    bottom: 300%;
 }
