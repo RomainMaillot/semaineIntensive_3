@@ -48,12 +48,11 @@ function initMap() {
 
     //remplissage de la string
 
-    let lastPos
+    let lastPos = [0]
 
     for (let i = 0; i < 3; i++) {
         fullLane = ""
         emptyLane = ""
-        lastPos = 0
         for (let j = 0; j < 60; j++) {
             fullLane += `lane${laneNum} `
         }
@@ -64,13 +63,20 @@ function initMap() {
         for (let j = 0; j < 60; j++) {
             let randomChara = Math.floor(Math.random() * 30)
 
-            console.log(emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ")            
+            console.log(emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . .")            
             
-            if ((randomChara >= 29 || emptyLane.substring(emptyLane.length - 16, emptyLane.length + 1) === ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ") && emptyLane.substring(0, emptyLane.length).includes(`corridor${(i+1) * 3}`) === false && emptyLane.substring(emptyLane.length - 20, emptyLane.length + 1).includes('corridors') === false && j - lastPos > 6){
+            if (
+                    (randomChara >= 29 || 
+                    j - lastPos[corNum - 1] > 20 &&
+                    emptyLane.substring(0, emptyLane.length).includes(`corridor${(i+1) * 3}`) === false &&
+                    (j - lastPos[corNum - 1] > 6 || lastPos[corNum - 1] - j > 6)
+                    
+                ){
+
                 // console.log(emptyLane.substring(0, emptyLane.length).includes(`corridor${(i+1) * 2}`))
                 emptyLane += `corridor${corNum} `
                 corNum++
-                lastPos = j
+                lastPos.push(j)
             } else  {
                 emptyLane += '. '
             }
@@ -86,6 +92,7 @@ function initMap() {
     map += `"${fullLane}"`
 
     $('.map').css('grid-template-areas', map)
+    console.log(lastPos)
 }
 
 initMap()
