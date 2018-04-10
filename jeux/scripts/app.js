@@ -11,8 +11,11 @@ init()
 
 function init(){
   //on initialise le jeux
+  //on crée le personnage et on le place
   createCharacter()
+  //on génere la map aléatoirement
   initMap()
+  //on regarde les déplacement du personnage
   listenArrows()
 }
 
@@ -195,7 +198,8 @@ function createCharacter(){
   //on crée le personnage et on le place sur le terrains
   character.src = charImg[a]
   character.style.position = 'absolute'
-  character.style.top = '40px'
+  character.style.top = '40%'
+  character.style.zIndex = '2000'
   character.style.left = left + 'px'
   character.style.height = '80px'
 
