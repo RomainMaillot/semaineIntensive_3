@@ -10,7 +10,7 @@ let frameRight = 0, frameLeft = 0, go
 const attacker = {
     score: 0,
     win : function () {
-        
+
         // window.removeEventListener('keydown')
         let gg = document.querySelector('.gg')
         gg.classList.remove('fadeOut')
@@ -251,8 +251,8 @@ function createCharacter(){
   lane[place].appendChild(character)
 }
 
-function defenseSkillsInit() {
-    document.querySelector('div[class^=lane]').addEventListener('click', () => {
-        if defenser.activeWeapon = ''
-    })
-}
+// function defenseSkillsInit() {
+//     document.querySelector('div[class^=lane]').addEventListener('click', () => {
+//         if defenser.activeWeapon = ''
+//     })
+// }
