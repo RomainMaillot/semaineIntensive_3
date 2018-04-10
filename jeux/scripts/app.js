@@ -210,7 +210,7 @@ function createCharacter(){
   //on crée le personnage et on le place sur le terrains
   character.src = charImg[0]
   character.style.position = 'absolute'
-  character.style.top = '40%'
+  character.style.top = '6vh'
   character.style.zIndex = '2000'
   character.style.left = left + 'px'
   character.style.height = '80px'
