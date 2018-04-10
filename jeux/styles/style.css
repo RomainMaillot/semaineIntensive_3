@@ -99,12 +99,12 @@ div[class^=corridor] img{
 div[class^=corridor] img:first-of-type{
     position: relative;
     height: 90px;
-    bottom: 1200%;
+    bottom: 1080%;
 }
 
 div[class^=corridor] img:nth-of-type(2){
     position: relative;
     height: 90px;
-    bottom: -50%;
+    bottom: 550%;
     filter: opacity(0.5)
 }
