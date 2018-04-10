@@ -162,7 +162,7 @@ function listenArrows() {
     }
     for (let i = 0;i<elevatorsDown.length;i++){
       let rectElevatorsDown = elevatorsDown[i].getBoundingClientRect()
-      if (e.keyCode==40 && (elevatorsDown[i].parentNode.offsetLeft - 20) <= left && (elevatorsDown[i].parentNode.offsetLeft + elevatorsDown[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[3] && rectElevatorsDown.top<=rectCharacter.top && (rectElevatorsDown.bottom+20)>=rectCharacter.bottom)
+      if (e.keyCode==40 && (elevatorsDown[i].parentNode.offsetLeft - 20) <= left && (elevatorsDown[i].parentNode.offsetLeft + elevatorsDown[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[3] && rectElevatorsDown.top<=rectCharacter.top && (rectElevatorsDown.bottom+30)>=rectCharacter.bottom)
       {
         //déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
          character.parentNode.removeChild(character)
@@ -175,7 +175,7 @@ function listenArrows() {
     for (let i = 0;i<elevatorsUp.length;i++)
     {
       let rectElevatorsUp = elevatorsUp[i].getBoundingClientRect()
-      if (e.keyCode==38 && (elevatorsUp[i].parentNode.offsetLeft - 20) <= left && (elevatorsUp[i].parentNode.offsetLeft + elevatorsUp[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[0] && rectElevatorsUp.top<=rectCharacter.top && (rectElevatorsUp.bottom+20)>=rectCharacter.bottom)
+      if (e.keyCode==38 && (elevatorsUp[i].parentNode.offsetLeft - 20) <= left && (elevatorsUp[i].parentNode.offsetLeft + elevatorsUp[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[0] && rectElevatorsUp.top<=rectCharacter.top && (rectElevatorsUp.bottom+30)>=rectCharacter.bottom)
       {
         //déplace le personnage à la ligne supérieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
         character.parentNode.removeChild(character)
