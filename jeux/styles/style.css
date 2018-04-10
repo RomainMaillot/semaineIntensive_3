@@ -118,9 +118,10 @@ div[class^=corridor] img:nth-of-type(2){
 .gg {
     position: fixed;
     top: 0;
-    height: 100vh;
-    width: 100%;
     background: #DCD654;
+    width: 85%;
+    height: 100%;
+    background-size: cover;
     color: white;
     text-shadow: 2px #DBB838;
     font-size: 30vh;
@@ -129,7 +130,7 @@ div[class^=corridor] img:nth-of-type(2){
     justify-content: center;
     align-items: center;
     z-index: 1500;
-    transition: 0.2s all ease-in-out;
+    transition: 0.5s all ease-in-out;
 }
 
 .hud {

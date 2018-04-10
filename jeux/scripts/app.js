@@ -14,7 +14,7 @@ const attacker = {
     health: 3,
     hasJump: true,
     win : function () {
-        
+
         // window.removeEventListener('keydown')
         let gg = document.querySelector('.gg')
         gg.classList.remove('fadeOut')
@@ -313,6 +313,7 @@ function createCharacter(){
   lane[place].appendChild(character)
 }
 
+<<<<<<< HEAD
 function defenseSkillsInit() {
     for (let i = 0; i < lane.length; i++) {
         lane[i].addEventListener('click', (e) => {
@@ -342,3 +343,10 @@ function defenseSkillsInit() {
         })
     }
 }
+=======
+// function defenseSkillsInit() {
+//     document.querySelector('div[class^=lane]').addEventListener('click', () => {
+//         if defenser.activeWeapon = ''
+//     })
+// }
+>>>>>>> 2dae7748f8b448b3195bb969cde88e472e9dfc77
