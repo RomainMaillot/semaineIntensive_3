@@ -1,6 +1,7 @@
 /* CONSTRUCTION DE LA GRILLE */
 
 .map{
+    overflow: hidden;
     background: #bcc3c6;
     margin-top: 50px;
     border-left: 2px solid #7D3232;
@@ -8,7 +9,7 @@
     border-bottom: 2px solid #7D3232;
     display: grid;
     width: 300%;
-    height: 90vh;
+    height: 70vh;
     grid-template-columns: repeat(60, calc(100% / 60));
     grid-template-rows: 1fr 10px 1fr 10px 1fr 10px 1fr;
     grid-gap: 0;
@@ -91,6 +92,10 @@ div[class^=corridor]{
     z-index: 1000;
 }
 
+div[class^=corridor] img{
+
+}
+
 div[class^=corridor] img:first-of-type{
     position: relative;
     height: 90px;
@@ -101,4 +106,5 @@ div[class^=corridor] img:nth-of-type(2){
     position: relative;
     height: 90px;
     bottom: -50%;
+    filter: opacity(0.5)
 }
