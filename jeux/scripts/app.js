@@ -7,6 +7,35 @@ let charImg = ["./images/sprite1.png","./images/sprite2.png","./images/sprite3.p
 let charImgLeft = ["./images/spriteL1.png","./images/spriteL2.png","./images/spriteL3.png","./images/spriteL4.png","./images/spriteL5.png","./images/spriteL6.png"]
 let frameRight = 0, frameLeft = 0, go
 
+const attacker = {
+    score: 0,
+    win : function () {
+        
+        // window.removeEventListener('keydown')
+        let gg = document.querySelector('.gg')
+        gg.classList.remove('fadeOut')
+        clearInterval(go)
+        left = 0
+        frameRight = 0
+        frameLeft = 0
+        character.parentNode.removeChild(character)
+        mapWrapper.classList.add('fadeOut')
+        setTimeout(() => { //gère toute la partie pendant le changement de niveau
+            initMap()
+            gg.classList.add('fadeOut')
+            mapWrapper.classList.remove('fadeOut')
+        }, 4000)
+        scrollTo(0, 0)
+        this.score += 1
+        if (parseInt(localStorage.getItem('bestScore')) < this.score ) {
+            localStorage.setItem('bestScore', this.score)
+        }
+
+        document.querySelector('.score').innerHTML = `score : ${this.score}`
+        init()
+    }
+}
+
 init()
 
 function init(){
@@ -204,6 +233,10 @@ function windowMove () {
     if (left > window.innerWidth / 2 && left < window.innerWidth * 2.5) {
         scrollTo(left - window.innerWidth / 2, 0)
     }
+    if (left > window.innerWidth * 2.9) {
+        attacker.win()
+        console.log('faaf')
+    }
 }
 
 function createCharacter(){
@@ -216,4 +249,10 @@ function createCharacter(){
   character.style.height = '80px'
 
   lane[place].appendChild(character)
+}
+
+function defenseSkillsInit() {
+    document.querySelector('div[class^=lane]').addEventListener('click', () => {
+        if defenser.activeWeapon = ''
+    })
 }

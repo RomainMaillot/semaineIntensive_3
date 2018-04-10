@@ -1,3 +1,9 @@
+/* REGLES DE BASE */
+
+body {
+    margin: 0;
+}
+
 /* CONSTRUCTION DE LA GRILLE */
 
 .map{
@@ -108,4 +114,29 @@ div[class^=corridor] img:nth-of-type(2){
     height: 11vh;
     top: 390%;
     filter: opacity(0.5)
+}
+.gg {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background: #DCD654;
+    color: white;
+    text-shadow: 2px#DBB838;
+    font-size: 30vh;
+    font-family: 'Do Hyeon', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+    transition: 0.2s all ease-in-out;
+}
+
+.hud {
+    position: fixed;
+    top: 0;
+}
+
+.fadeOut {
+    opacity: 0;
 }

@@ -1,7 +1,4 @@
-const Player = {
-    username: "",
-    mode: "attack",
-    score: 0,
+const defenser = {
     weapons: [
         {
             name: 'fuuf',
@@ -25,6 +22,13 @@ const Player = {
             }
         },
     ],
+    
+}
+
+const attacker = {
+    score: 0,
+    health: 3,
+    hasJump: true,
     win : function () {
         
         window.removeEventListener('keydown')
@@ -47,6 +51,7 @@ const Player = {
     }
 }
 
-const firstPlayer = new Player
-
-const secPlayer = new Player
+const Player = {
+    username: "",
+    score: 0
+}
