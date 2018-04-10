@@ -136,7 +136,9 @@ div[class^=corridor] img:nth-of-type(2){
 .hud {
     position: fixed;
     top: 0;
-    width: 30%;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .fadeOut {
@@ -144,9 +146,19 @@ div[class^=corridor] img:nth-of-type(2){
     opacity: 0;
 }
 
-.heuresup {
+.heuresup, .dossier, .gandalf, .ascenseuroff, .alarme {
     width: 36px;
     height: 36px;
     background: #DBB838;
-    float: right;
+    margin: 5px;
+}
+
+.score {
+    display: inline-block;
+}
+
+/* REGLES TEMPORAIRES */
+
+.timer {
+    display: none;
 }

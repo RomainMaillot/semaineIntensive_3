@@ -3,7 +3,9 @@
 let character = new Image()
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
+let chronometer = 75
 let speed = 30
+let triggerKeyDown = new Event('keydown')
 let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
 let charImg = ["./images/sprite1.png","./images/sprite2.png","./images/sprite3.png","./images/sprite4.png","./images/sprite5.png","./images/sprite6.png"]
@@ -57,7 +59,7 @@ const defenser = {
         {
             name: 'gandalf',
             interval: 10,
-            behavior: () => {
+            behavior: (e) => {
                 if (this.interval === 0) {
                     //actions
                     this.interval += 10
@@ -76,10 +78,16 @@ const defenser = {
         },
         {
             name: 'alarme',
-            interval: 25,
+            isActive: false,
+            interval: 0,
             behavior: () => {
                 if (this.interval === 0) {
-                    //actions
+                    console.log('siiss')
+                    
+                    this.isActive = true
+                    setTimeout(() => {
+                        this.isActive = false
+                    }, 6000)
                     this.interval += 25
                 }
             }
@@ -93,6 +101,8 @@ const defenser = {
                     window.removeEventListener('keydown', keyHandler)
                     speed = 50
                     listenArrows()
+                    triggerKeyDown.which = 37
+                    document.dispatchEvent(triggerKeyDown)
                     setTimeout(() => {
                         speed = 30
                         listenArrows()
@@ -118,6 +128,8 @@ function init(){
   defenseSkillsInit()
   //initialise le HUD
   hud()
+  //remet à 0 les timer des compétences du boss
+  initWeapons()
 }
 
 function initMap() {
@@ -304,6 +316,8 @@ function setElevators() {
     }
 }
 
+// bouge la fenêtre en même temps que le personnage et définit la zone de victoire
+
 function windowMove () {
     if (left > window.innerWidth / 2 && left < window.innerWidth * 2.5) {
         scrollTo(left - window.innerWidth / 2, 0)
@@ -326,6 +340,7 @@ function createCharacter(){
   lane[place].appendChild(character)
 }
 
+// génère l'action souhaitée sur le terrain en fonction de l'arme choisie
 function defenseSkillsInit() {
     for (let i = 0; i < lane.length; i++) {
         lane[i].addEventListener('click', (e) => {
@@ -341,14 +356,6 @@ function defenseSkillsInit() {
                     defenser.weapons[2].behavior()
                     break;
     
-                case 'alarme':
-                    defenser.weapons[3].behavior()
-                    break;
-    
-                case 'heure sup':
-                    defenser.weapons[4].behavior()
-                    break;
-                
                 default:
                     break;
             }
@@ -356,12 +363,48 @@ function defenseSkillsInit() {
     }
 }
 
+// initialise les écouteurs d'événements du HUD
+
 function hud() {
+    document.querySelector('.dossier').addEventListener('click', (e) => {
+        e.preventDefault()
+        defenser.weapons[0].behavior()
+    })
+    document.querySelector('.gandalf').addEventListener('click', (e) => {
+        e.preventDefault()
+        defenser.weapons[1].behavior()
+    })
+    document.querySelector('.ascenseuroff').addEventListener('click', (e) => {
+        e.preventDefault()
+        defenser.weapons[2].behavior()
+    })
+    document.querySelector('.alarme').addEventListener('click', (e) => {
+        e.preventDefault()
+        defenser.weapons[3].behavior()
+    })
     document.querySelector('.heuresup').addEventListener('click', (e) => {
         e.preventDefault()
         defenser.weapons[4].behavior()
     })
 }
+
+// réinitialise le temps de recharge des armes du boss
+
+function initWeapons() {
+    defenser.weapons[0].interval = 30
+    defenser.weapons[1].interval = 15
+    defenser.weapons[2].interval = 25
+    defenser.weapons[3].interval = 25
+    defenser.weapons[4].interval = 25
+}
+
+//fonction qui prend en charge la défaite
+
+function lose() {
+    console.log('t\'as perdu! et moi j\'ai gagné!')
+}
+
+//à chaque seconde, recharge des compétences du boss et décompte du temps
 
 setInterval(() => {
     for (let i = 0; i < defenser.weapons.length; i++) {
@@ -369,5 +412,20 @@ setInterval(() => {
             defenser.weapons[i].interval -= 1
         }
     }
+
+    // si le boss a foutu l'alarme incendie...
+
+    if (defenser.weapons[3].isActive) {
+        chronometer -= 1.5
+    } else {
+        chronometer -= 1        
+    }
+    document.querySelector('.timer').innerHTML = `Temps restant : ${chronometer} sec`
+    if (chronometer === 0) {
+        lose()
+    }
 }, 1000)
   
+// setInterval(() => {
+//     chronometer -= 1
+// }, timerSpeed)
