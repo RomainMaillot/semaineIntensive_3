@@ -5,7 +5,7 @@ let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
 let charImg = ["./images/sprite1.png","./images/sprite2.png","./images/sprite3.png","./images/sprite4.png","./images/sprite5.png","./images/sprite6.png"]
 let charImgLeft = ["./images/spriteL1.png","./images/spriteL2.png","./images/spriteL3.png","./images/spriteL4.png","./images/spriteL5.png","./images/spriteL6.png"]
-let a = 0, b = 0, go
+let frameRight = 0, frameLeft = 0, go
 
 init()
 
@@ -110,25 +110,26 @@ function listenArrows() {
   window.addEventListener('keydown', function(e){
   //on gère les déplacements du personnage en fonction de la touche
   e.preventDefault()
-    let nextCorridor = character.parentNode.nextSibling.nextSibling
-    let pastCorridor = character.parentNode.previousSibling.previousSibling
+    let elevatorsDown = document.querySelectorAll('div[class^=corridor] img:first-of-type')
+    var rectCharacter = character.getBoundingClientRect()
+    let elevatorsUp = document.querySelectorAll('div[class^=corridor] img:nth-of-type(2)')
     if (e.keyCode==39)
     {
       //déplace le personnage vers la droite
       clearInterval(go)
        go = setInterval( function() {
 
-        if (a < 5){
+        if (frameRight < 5){
           left += 10
           character.style.left = left + 'px'
-          a += 1
-          character.src = charImg[a]
+          frameRight += 1
+          character.src = charImg[frameRight]
         }
         else {
-          a = 0
+          frameRight = 0
           left += 20
           character.style.left = left + 'px'
-          character.src = charImg[a]
+          character.src = charImg[frameRight]
         }
         windowMove()
       },30)
@@ -141,17 +142,17 @@ function listenArrows() {
 
          if (left > 0)
          {
-          if (b < 5){
+          if (frameLeft < 5){
            left -= 10
            character.style.left = left + 'px'
-           b += 1
-           character.src = charImgLeft[b]
+           frameLeft += 1
+           character.src = charImgLeft[frameLeft]
          }
          else {
-           b = 0
+           frameLeft = 0
            left -= 20
            character.style.left = left + 'px'
-           character.src = charImgLeft[b]
+           character.src = charImgLeft[frameLeft]
          }}
          else {
            character.src = charImg[0]
@@ -159,19 +160,30 @@ function listenArrows() {
         windowMove()
       },30)
     }
-    if (e.keyCode==40 && (nextCorridor.offsetLeft - 20) <= left && (nextCorridor.offsetLeft + nextCorridor.offsetWidth)>=(left + character.offsetWidth))
-    {
-      //déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
-       character.parentNode.removeChild(character)
-       place += 1
-       lane[place].appendChild(character)
+    for (let i = 0;i<elevatorsDown.length;i++){
+      let rectElevatorsDown = elevatorsDown[i].getBoundingClientRect()
+      if (e.keyCode==40 && (elevatorsDown[i].parentNode.offsetLeft - 20) <= left && (elevatorsDown[i].parentNode.offsetLeft + elevatorsDown[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[3] && rectElevatorsDown.top<=rectCharacter.top && (rectElevatorsDown.bottom+20)>=rectCharacter.bottom)
+      {
+        //déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
+         character.parentNode.removeChild(character)
+         console.log(place)
+         place += 1
+         console.log(place)
+         lane[place].appendChild(character)
+      }
     }
-    if (e.keyCode==38 && (pastCorridor.offsetLeft - 20) <= left && (pastCorridor.offsetLeft + pastCorridor.offsetWidth)>=(left + character.offsetWidth))
+    for (let i = 0;i<elevatorsUp.length;i++)
     {
-      //déplace le personnage à la ligne supérieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
-      character.parentNode.removeChild(character)
-      place -= 1
-      lane[place].appendChild(character)
+      let rectElevatorsUp = elevatorsUp[i].getBoundingClientRect()
+      if (e.keyCode==38 && (elevatorsUp[i].parentNode.offsetLeft - 20) <= left && (elevatorsUp[i].parentNode.offsetLeft + elevatorsUp[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[0] && rectElevatorsUp.top<=rectCharacter.top && (rectElevatorsUp.bottom+20)>=rectCharacter.bottom)
+      {
+        //déplace le personnage à la ligne supérieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
+        character.parentNode.removeChild(character)
+        console.log(place)
+        place -= 1
+        console.log(place)
+        lane[place].appendChild(character)
+      }
     }
 })
 }
@@ -196,7 +208,7 @@ function windowMove () {
 
 function createCharacter(){
   //on crée le personnage et on le place sur le terrains
-  character.src = charImg[a]
+  character.src = charImg[0]
   character.style.position = 'absolute'
   character.style.top = '40%'
   character.style.zIndex = '2000'
