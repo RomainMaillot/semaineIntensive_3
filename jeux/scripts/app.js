@@ -1,3 +1,5 @@
+// import { attacker } from 'scripts/playerData.js'
+
 let character = new Image()
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
@@ -9,6 +11,8 @@ let frameRight = 0, frameLeft = 0, go
 
 const attacker = {
     score: 0,
+    health: 3,
+    hasJump: true,
     win : function () {
         
         // window.removeEventListener('keydown')
@@ -36,6 +40,62 @@ const attacker = {
     }
 }
 
+const defenser = {
+    activeWeapon: 'dossier',
+    weapons: [
+        {
+            name: 'dossier',
+            interval: 30,
+            behavior: function () {
+                if (this.interval === 0) {
+                    console.log('feef')
+                    this.interval += 30
+                }
+            }
+        },
+        {
+            name: 'gandalf',
+            interval: 10,
+            behavior: () => {
+                if (this.interval === 0) {
+                    //actions
+                    this.interval += 10
+                }
+            }
+        },
+        {
+            name: 'ascenseur',
+            interval: 25,
+            behavior: () => {
+                if (this.interval === 0) {
+                    //actions
+                    this.interval += 25
+                }
+            }
+        },
+        {
+            name: 'alarme',
+            interval: 25,
+            behavior: () => {
+                if (this.interval === 0) {
+                    //actions
+                    this.interval += 25
+                }
+            }
+        },
+        {
+            name: 'heure sup',
+            interval: 25,
+            behavior: () => {
+                if (this.interval === 0) {
+                    //actions
+                    this.interval += 25
+                }
+            }
+        }
+    ],
+}
+
 init()
 
 function init(){
@@ -46,6 +106,8 @@ function init(){
   initMap()
   //on regarde les déplacement du personnage
   listenArrows()
+  //on écoute les attaques du défenseurs au clic
+  defenseSkillsInit()
 }
 
 function initMap() {
@@ -252,7 +314,31 @@ function createCharacter(){
 }
 
 function defenseSkillsInit() {
-    document.querySelector('div[class^=lane]').addEventListener('click', () => {
-        if defenser.activeWeapon = ''
-    })
+    for (let i = 0; i < lane.length; i++) {
+        lane[i].addEventListener('click', (e) => {
+            switch (defenser.activeWeapon) {
+                case 'dossier':
+                    defenser.weapons[0].behavior()
+                    break;
+                case 'gandalf':
+                    defenser.weapons[1].behavior()
+                    break;
+    
+                case 'ascenseur':
+                    defenser.weapons[2].behavior()
+                    break;
+    
+                case 'alarme':
+                    defenser.weapons[3].behavior()
+                    break;
+    
+                case 'heure sup':
+                    defenser.weapons[4].behavior()
+                    break;
+                
+                default:
+                    break;
+            }
+        })
+    }
 }
