@@ -90,6 +90,7 @@ div[class^=lane] {
 
 div[class^=corridor]{
     z-index: 1000;
+    position: relative;
 }
 
 div[class^=corridor] img{
@@ -97,14 +98,14 @@ div[class^=corridor] img{
 }
 
 div[class^=corridor] img:first-of-type{
-    position: relative;
+    position: absolute;
     height: 11vh;
-    bottom: 1080%;
+    bottom: 280%;
 }
 
 div[class^=corridor] img:nth-of-type(2){
-    position: relative;
+    position: absolute;
     height: 11vh;
-    bottom: 550%;
+    top: 390%;
     filter: opacity(0.5)
 }
