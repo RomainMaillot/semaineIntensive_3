@@ -136,9 +136,17 @@ div[class^=corridor] img:nth-of-type(2){
 .hud {
     position: fixed;
     top: 0;
+    width: 30%;
 }
 
 .fadeOut {
     display: none;
     opacity: 0;
+}
+
+.heuresup {
+    width: 36px;
+    height: 36px;
+    background: #DBB838;
+    float: right;
 }

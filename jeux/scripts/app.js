@@ -3,6 +3,7 @@
 let character = new Image()
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
+let speed = 30
 let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
 let charImg = ["./images/sprite1.png","./images/sprite2.png","./images/sprite3.png","./images/sprite4.png","./images/sprite5.png","./images/sprite6.png"]
@@ -85,10 +86,17 @@ const defenser = {
         },
         {
             name: 'heure sup',
-            interval: 25,
-            behavior: () => {
+            interval: 0,
+            behavior: function () {
                 if (this.interval === 0) {
-                    //actions
+                    console.log('jaaj')
+                    window.removeEventListener('keydown', keyHandler)
+                    speed = 50
+                    listenArrows()
+                    setTimeout(() => {
+                        speed = 30
+                        listenArrows()
+                    }, 5000)
                     this.interval += 25
                 }
             }
@@ -108,6 +116,8 @@ function init(){
   listenArrows()
   //on écoute les attaques du défenseurs au clic
   defenseSkillsInit()
+  //initialise le HUD
+  hud()
 }
 
 function initMap() {
@@ -197,10 +207,9 @@ function initMap() {
     setElevators()
 }
 
-function listenArrows() {
-  window.addEventListener('keydown', function(e){
-  //on gère les déplacements du personnage en fonction de la touche
-  e.preventDefault()
+
+function keyHandler (e) {
+    e.preventDefault()
     let elevatorsDown = document.querySelectorAll('div[class^=corridor] img:first-of-type')
     var rectCharacter = character.getBoundingClientRect()
     let elevatorsUp = document.querySelectorAll('div[class^=corridor] img:nth-of-type(2)')
@@ -223,7 +232,7 @@ function listenArrows() {
           character.src = charImg[frameRight]
         }
         windowMove()
-      },30)
+      }, speed)
     }
     if (e.keyCode==37)
     {
@@ -249,11 +258,12 @@ function listenArrows() {
            character.src = charImg[0]
          }
         windowMove()
-      },30)
+      }, speed)
     }
+
     for (let i = 0;i<elevatorsDown.length;i++){
       let rectElevatorsDown = elevatorsDown[i].getBoundingClientRect()
-      if (e.keyCode==40 && (elevatorsDown[i].parentNode.offsetLeft - 20) <= left && (elevatorsDown[i].parentNode.offsetLeft + elevatorsDown[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[3] && rectElevatorsDown.top<=rectCharacter.top && (rectElevatorsDown.bottom+30)>=rectCharacter.bottom)
+      if (e.keyCode == 40 && (elevatorsDown[i].parentNode.offsetLeft - 20) <= left && (elevatorsDown[i].parentNode.offsetLeft + elevatorsDown[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[3] && rectElevatorsDown.top<=rectCharacter.top && (rectElevatorsDown.bottom+30)>=rectCharacter.bottom)
       {
         //déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
          character.parentNode.removeChild(character)
@@ -276,7 +286,10 @@ function listenArrows() {
         lane[place].appendChild(character)
       }
     }
-})
+}
+
+function listenArrows() {
+    window.addEventListener('keydown', keyHandler)
 }
 
 function setElevators() {
@@ -313,7 +326,6 @@ function createCharacter(){
   lane[place].appendChild(character)
 }
 
-<<<<<<< HEAD
 function defenseSkillsInit() {
     for (let i = 0; i < lane.length; i++) {
         lane[i].addEventListener('click', (e) => {
@@ -343,10 +355,19 @@ function defenseSkillsInit() {
         })
     }
 }
-=======
-// function defenseSkillsInit() {
-//     document.querySelector('div[class^=lane]').addEventListener('click', () => {
-//         if defenser.activeWeapon = ''
-//     })
-// }
->>>>>>> 2dae7748f8b448b3195bb969cde88e472e9dfc77
+
+function hud() {
+    document.querySelector('.heuresup').addEventListener('click', (e) => {
+        e.preventDefault()
+        defenser.weapons[4].behavior()
+    })
+}
+
+setInterval(() => {
+    for (let i = 0; i < defenser.weapons.length; i++) {
+        if (defenser.weapons[i].interval > 0) {
+            defenser.weapons[i].interval -= 1
+        }
+    }
+}, 1000)
+  
