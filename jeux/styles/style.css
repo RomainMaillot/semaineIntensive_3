@@ -168,14 +168,14 @@ div[class^=corridor] img:nth-of-type(2){
 }
 
 .gandalfPers {
-    width: 130px;
-    height: 155px;
+    width: 65px;
+    height: 90px;
     position: absolute;
-    bottom: -30px;
+    bottom: 1.5vh;
     animation-name: appear;
     animation-duration: 0.5s;
     animation-timing-function: linear;
-    z-index: 2000;
+    z-index: 1000;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

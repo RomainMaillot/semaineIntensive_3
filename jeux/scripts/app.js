@@ -52,12 +52,16 @@ const defenser = {
         {
             name: 'dossier',
             interval: 30,
+            folderPlace: null,
             behavior: function (e) {
                 if (this.interval === 0) {
                     defenser.activeWeapon = 'dossier'
 
                     let folder = document.createElement('div')
                     let posFolder = window.innerWidth + window.scrollX
+
+                    //enregistrement de la lane du dossier
+                    this.folderPlace = parseInt(e.currentTarget.className.replace('lane', '')) - 1                  
                     folder.classList.add('folder')
                     e.currentTarget.appendChild(folder)
                     let elFolder = document.querySelector('.folder')
@@ -67,7 +71,7 @@ const defenser = {
                         elFolder.style.left = posFolder + 'px'
                         if (posFolder < window.scrollX) {
                             elFolder.parentNode.removeChild(elFolder)
-                        } else if (posFolder < left + 35) {
+                        } else if (posFolder < left + 35 && this.folderPlace === place) {
                             console.log('fuuf')
                             // attacker.health -= 1
                             elFolder.parentNode.removeChild(elFolder)
@@ -81,20 +85,30 @@ const defenser = {
         {
             name: 'gandalf',
             interval: 10,
+            falseWallPos: 5000,
+            gandalfPlace: null,
             behavior: function (e) {
                 if (this.interval === 0) {
-                    console.log('nice')
+                    console.log(e.pageX)
                     defenser.activeWeapon = 'gandalf'
 
                     let gandalf = document.createElement('div')
                     let posGandalf = e.pageX
                     gandalf.classList.add('gandalfPers')
+
+                    //enregistrement de la place de Gandalf
+                    this.gandalfPlace = parseInt(e.currentTarget.className.replace('lane', '')) - 1
                     e.currentTarget.appendChild(gandalf)
                     let elGandalf = document.querySelector('.gandalfPers')
                     elGandalf.style.left = posGandalf + 'px'
-                    setInterval(() => {
-                        elGandalf.parentNode.removeChild(elGandalf)
-                    }, 10000)
+
+                    //permet la gestion des collisions
+
+                    this.falseWallPos = posGandalf
+                    // setInterval(() => {
+                    //     elGandalf.parentNode.removeChild(elGandalf)
+                    //     this.falseWallPos = 5000
+                    // }, 10000)
                     this.interval += 10
                     hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
@@ -178,8 +192,8 @@ function init(){
 }
 
 function moveCharacater () {
-  go = setInterval( function(){
-    if (dir == 1)
+    go = setInterval( function(){
+    if (dir == 1 && ( left < defenser.weapons[1].falseWallPos - 50 || defenser.weapons[1].gandalfPlace !== place) )
     {
       left += 2
       character.style.left = left + 'px'
