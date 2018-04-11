@@ -6,7 +6,7 @@ let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
 let chronometer = 75
 var chronoTime //contient un setInterval
-let speed = 30
+let speed = 4
 let triggerKeyDown = new Event('keydown')
 let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
@@ -47,7 +47,7 @@ const attacker = {
 }
 
 const defenser = {
-    activeWeapon: 'dossier',
+    activeWeapon: null,
     weapons: [
         {
             name: 'dossier',
@@ -135,14 +135,15 @@ const defenser = {
             behavior: function () {
                 if (this.interval === 0) {
                     console.log('jaaj')
-                    window.removeEventListener('keydown', keyHandler)
-                    speed = 50
-                    listenArrows()
+                    clearInterval(go)
+                    speed = 9
+                    moveCharacater()
                     triggerKeyDown.which = 37
                     document.dispatchEvent(triggerKeyDown)
                     setTimeout(() => {
-                        speed = 30
-                        listenArrows()
+                        clearInterval(go)
+                        speed = 4
+                        moveCharacater()
                     }, 5000)
                     this.interval += 25
                 }
@@ -171,7 +172,7 @@ function init(){
   chronoSet(1000)
 }
 
-function moveCharacater(){
+function moveCharacater () {
   go = setInterval( function(){
     if (dir == 1)
     {
@@ -185,7 +186,7 @@ function moveCharacater(){
       character.style.left = left + 'px'
       windowMove()
     }
-  },5)
+  }, speed)
 }
 
 function initMap() {

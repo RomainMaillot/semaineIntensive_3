@@ -146,12 +146,6 @@ div[class^=corridor] img:nth-of-type(2){
     opacity: 0;
 }
 
-.heuresup, .dossier, .gandalf, .ascenseuroff, .alarme {
-    width: 36px;
-    height: 36px;
-    background: #DBB838;
-    margin: 5px;
-}
 .timerAccelerated {
     color: red;
 }
@@ -262,4 +256,28 @@ div[class^=corridor] img:nth-of-type(2){
 @keyframes prog {
   from {opacity: 0}
   to {opacity: 1}
+}
+
+/* RELATIF A L'INTERFACE */
+
+.buttons {
+    width: 30%;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.skill {
+    width: 18%;
+    height: 5vh;
+    background: #DBB838;
+}
+.skill img {
+    width: 100%;
+    height: 100%
+}
+.dossier {
+    
 }
