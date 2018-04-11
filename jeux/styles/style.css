@@ -157,8 +157,18 @@ div[class^=corridor] img:nth-of-type(2){
     display: inline-block;
 }
 
-/* REGLES TEMPORAIRES */
+/* RELATIF AUX POUVOIRS */
 
-.timer {
-    display: none;
+.folder {
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    animation: move 0.8s infinite;
+    background-image: url('../images/dossier.png')
 }
+
+@keyframes move {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+}
+/* REGLES TEMPORAIRES */

@@ -1,9 +1,10 @@
-// import { attacker } from 'scripts/playerData.js'
+// import { attacker, defenser } from './playersData.js'
 
 let character = new Image()
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
 let chronometer = 75
+var chronoTime
 let speed = 30
 let triggerKeyDown = new Event('keydown')
 let mapWrapper = document.querySelector('.map')
@@ -49,11 +50,23 @@ const defenser = {
         {
             name: 'dossier',
             interval: 30,
-            behavior: function () {
-                if (this.interval === 0) {
-                    console.log('feef')
-                    this.interval += 30
-                }
+            behavior: function (e) {
+                // if (this.interval === 0) {
+                //     let folder = document.createElement('div')
+                //     let posFolder = window.innerWidth + window.scrollX
+                //     folder.classList.add('folder')
+                //     e.currentTarget.appendChild(folder)
+                //     let elFolder = document.querySelector('.folder')
+                //     elFolder.left = posFolder + 'px'
+                //     setInterval(() => {
+                //         posFolder -= 10
+                //         elFolder.left = posFolder + 'px'
+                //         if (posFolder < window.scrollX) {
+                //             e.currentTarget.removeChild(elFolder)
+                //         }
+                //     }, 20)
+                //     this.interval += 30
+                // }
             }
         },
         {
@@ -78,14 +91,17 @@ const defenser = {
         },
         {
             name: 'alarme',
-            isActive: false,
             interval: 0,
-            behavior: () => {
+            behavior: function () {
                 if (this.interval === 0) {
                     console.log('siiss')
+                    clearInterval(chronoTime)
+                    chronoSet(400)
                     
-                    this.isActive = true
+                    
                     setTimeout(() => {
+                        clearInterval(chronoTime)
+                        chronoSet(1000)
                         this.isActive = false
                     }, 6000)
                     this.interval += 25
@@ -130,6 +146,8 @@ function init(){
   hud()
   //remet à 0 les timer des compétences du boss
   initWeapons()
+  //initialise le chrono
+  chronoSet(1000)
 }
 
 function initMap() {
@@ -158,8 +176,6 @@ function initMap() {
         }
     }
 
-    console.log(laneCorrCount)
-
     let corrPositions = [[], [], []]
 
     for (let j = 0; j < 3; j++) { //boucle qui parcours chaque le premier niveau du tableau
@@ -169,8 +185,6 @@ function initMap() {
         }
         corrPositions[j].sort(function (a, b) {return a - b})
     }
-
-    console.log(corrPositions)
 
     let map = "" //chaîne de caractère contenant la disposition du terrain
 
@@ -212,8 +226,6 @@ function initMap() {
         fullLane += `lane${laneNum} `
     }
     map += `"${fullLane}"`
-
-    console.log(map)
 
     $('.map').css('grid-template-areas', map)
     setElevators()
@@ -391,11 +403,11 @@ function hud() {
 // réinitialise le temps de recharge des armes du boss
 
 function initWeapons() {
-    defenser.weapons[0].interval = 30
-    defenser.weapons[1].interval = 15
-    defenser.weapons[2].interval = 25
-    defenser.weapons[3].interval = 25
-    defenser.weapons[4].interval = 25
+    defenser.weapons[0].interval = 0
+    defenser.weapons[1].interval = 0
+    defenser.weapons[2].interval = 0
+    defenser.weapons[3].interval = 0
+    defenser.weapons[4].interval = 0
 }
 
 //fonction qui prend en charge la défaite
@@ -415,17 +427,22 @@ setInterval(() => {
 
     // si le boss a foutu l'alarme incendie...
 
-    if (defenser.weapons[3].isActive) {
-        chronometer -= 1.5
-    } else {
-        chronometer -= 1        
-    }
-    document.querySelector('.timer').innerHTML = `Temps restant : ${chronometer} sec`
+    // if (defenser.weapons[3].isActive) {
+    //     chronometer -= 1.5
+    // } else {
+    //     chronometer -= 1        
+    // }
     if (chronometer === 0) {
         lose()
     }
 }, 1000)
-  
-// setInterval(() => {
-//     chronometer -= 1
-// }, timerSpeed)
+
+//gère le chronomètre
+function chronoSet (timerSpeed) {
+    chronoTime = setInterval(function () {
+        if (chronometer > 0) {
+            chronometer -= 1
+        }
+        document.querySelector('.timer').innerHTML = `Temps restant : ${chronometer} sec`    
+    }, timerSpeed)
+}
