@@ -14,6 +14,7 @@ let go
 let jump = true
 let jumpImg = document.querySelector('#jumpContainer img')
 let jumpstop, timer2, dir
+let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar2.png','./images/lifebar3.png']
 
 const attacker = {
     score: 0,
@@ -24,9 +25,11 @@ const attacker = {
         // window.removeEventListener('keydown')
         let gg = document.querySelector('.gg')
         mapWrapper.style.display = 'none'
-        gg.style.opacity = '1'
+        setTimeout( () => {
+          gg.style.opacity = '1'
+        },50)
+          gg.style.display = 'block'
         clearInterval(go)
-        clearInterval(chronoTime)
         if (character.classList.contains('characterL'))
         {
           character.classList.remove('characterL')
@@ -43,6 +46,7 @@ const attacker = {
         setTimeout(() => { //gère toute la partie pendant le changement de niveau
             initMap()
             mapWrapper.style.display = 'grid'
+            gg.style.display = 'none'
             scrollTo(0, 0)
             this.score += 1
             if (parseInt(localStorage.getItem('bestScore')) < this.score ) {
@@ -50,6 +54,7 @@ const attacker = {
             }
 
             document.querySelector('.score').innerHTML = `score : ${this.score}`
+            clearInterval(chronoTime)
             init()
         }, 2000)
     }
@@ -79,10 +84,19 @@ const defenser = {
                         posFolder -= 10
                         elFolder.style.left = posFolder + 'px'
                         if (posFolder < window.scrollX) {
+                          if(elFolder.parentNode != null)
+                          {
                             elFolder.parentNode.removeChild(elFolder)
-                        } else if (posFolder < left + 35 && this.folderPlace === place) {
-                            // attacker.health -= 1
-                            elFolder.parentNode.removeChild(elFolder)
+                          }
+                        }
+                        else if (posFolder < left + 35 && posFolder + elFolder.offsetWidth > left + character.offsetWidth && this.folderPlace === place) {
+                            attacker.health -= 1
+                            console.log(attacker.health)
+                            lifebar.setAttribute('src',lifebarImg[attacker.health])
+                            if(elFolder.parentNode != null)
+                            {
+                              elFolder.parentNode.removeChild(elFolder)
+                            }
                         }
                     }, 20)
                     this.interval += 30
@@ -196,6 +210,7 @@ function init(){
   //initialise le chrono
   chronometer = 75
   chronoSet(1000)
+  life = 3
 }
 
 function moveCharacater () {
@@ -503,6 +518,10 @@ setInterval(() => {
     }
     if (chronometer === 0) {
         lose()
+    }
+    if (attacker.health == 0)
+    {
+      lose()
     }
 }, 1000)
 
