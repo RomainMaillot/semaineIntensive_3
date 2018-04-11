@@ -4,7 +4,7 @@ let character = document.createElement('div')
 let hudButtons = document.querySelectorAll('.skill')
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
-let chronometer = 75
+let chronometer
 var chronoTime //contient un setInterval
 let speed = 4
 let triggerKeyDown = new Event('keydown')
@@ -194,6 +194,7 @@ function init(){
   //remet à 0 les timer des compétences du boss
   initWeapons()
   //initialise le chrono
+  chronometer = 75
   chronoSet(1000)
 }
 
