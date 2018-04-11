@@ -5,9 +5,10 @@ let hudButtons = document.querySelectorAll('.skill')
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
 let chronometer
-var chronoTime //contient un setInterval
+var chronoTime //contiendra un setInterval
 let speed = 4
 let triggerKeyDown = new Event('keydown')
+let cpuClick = new Event('click')
 let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
 let go
@@ -127,10 +128,10 @@ const defenser = {
                     //permet la gestion des collisions
 
                     this.falseWallPos = posGandalf
-                    // setInterval(() => {
-                    //     elGandalf.parentNode.removeChild(elGandalf)
-                    //     this.falseWallPos = 5000
-                    // }, 10000)
+                    setTimeout(() => {
+                        elGandalf.parentNode.removeChild(elGandalf)
+                        this.falseWallPos = 5000
+                    }, 10000)
                     this.interval += 10
                     hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
@@ -145,10 +146,16 @@ const defenser = {
                     let strikedElevator = e.currentTarget
                     strikedElevator.parentNode.childNodes[0].classList.add('unactivated')
                     strikedElevator.parentNode.childNodes[1].classList.add('unactivated')
+
+                    strikedElevator.parentNode.childNodes[0].src = 'images/elevator_problem.png'
+                    strikedElevator.parentNode.childNodes[1].src = 'images/elevator_problem.png'
                     
                     setTimeout(() => {
                         strikedElevator.parentNode.childNodes[0].classList.remove('unactivated')
                         strikedElevator.parentNode.childNodes[1].classList.remove('unactivated')
+
+                        strikedElevator.parentNode.childNodes[0].src = 'images/elevator_door.png'
+                        strikedElevator.parentNode.childNodes[1].src = 'images/elevator_door.png'
                     }, 8000)
                 }
             }
@@ -195,6 +202,26 @@ const defenser = {
             }
         }
     ],
+}
+
+const cpu = {
+    level: 0,
+    play: function () {
+        setInterval(() => {
+            // dois-je jouer?
+            let shallPlay = Math.floor(Math.random() * 2)
+            if (shallPlay === 1) {
+                
+                // sur quelle ligne dois-je jouer?
+                // let randomLane = Math.floor(Math.random() * 5)
+                cpuClick.currentTarget = window
+
+                console.log(cpuClick)
+                defenser.weapons[0].behavior(cpuClick)
+
+            }
+        }, 2000)
+    }
 }
 
 init()

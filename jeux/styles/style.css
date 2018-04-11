@@ -323,5 +323,5 @@ div[class^=corridor] img:nth-of-type(2){
 }
 
 .unactivated {
-    filter: brightness(0.5);
+    filter: brightness(0.8);
 }
