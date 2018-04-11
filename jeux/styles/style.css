@@ -162,16 +162,15 @@ div[class^=corridor] img:nth-of-type(2){
 /* RELATIF AUX POUVOIRS */
 
 .folder {
-    width: 36px;
-    height: 36px;
+    width: 76px;
+    height: 76px;
     position: absolute;
-    animation: move 0.8s infinite;
+    animation: folder 0.4s infinite;
     animation-timing-function: linear;
     background-image: url('../images/folder.png');
     background-size: cover;
     z-index: 2000;
     margin-top: 35px;
-    box-shadow: 0 0 5px black;
 }
 
 .gandalfPers {
@@ -189,9 +188,17 @@ div[class^=corridor] img:nth-of-type(2){
     background-image: url('../images/gandalf6.png');
 }
 
-@keyframes move {
-    from {transform: rotate(0deg)}
-    to {transform: rotate(360deg)}
+@keyframes folder {
+    0%  {background: url('../images/folder0.png'); background-size: contain; background-repeat: no-repeat;}
+    10%  {background: url('../images/folder1.png'); background-size: contain; background-repeat: no-repeat;}
+    20%  {background: url('../images/folder2.png'); background-size: contain; background-repeat: no-repeat;}
+    30%  {background: url('../images/folder3.png'); background-size: contain; background-repeat: no-repeat;}
+    40%  {background: url('../images/folder4.png'); background-size: contain; background-repeat: no-repeat;}
+    50%  {background: url('../images/folder5.png'); background-size: contain; background-repeat: no-repeat;}
+    60%  {background: url('../images/folder6.png'); background-size: contain; background-repeat: no-repeat;}
+    70%  {background: url('../images/folder7.png'); background-size: contain; background-repeat: no-repeat;}
+    80%  {background: url('../images/folder8.png'); background-size: contain; background-repeat: no-repeat;}
+    100%  {background: url('../images/folder9.png'); background-size: contain; background-repeat: no-repeat;}
 }
 
 @keyframes appear {
