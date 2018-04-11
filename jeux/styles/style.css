@@ -203,5 +203,56 @@ div[class^=corridor] img:nth-of-type(2){
     80%  {background: url('../images/gandalf5.png'); background-size: contain; background-repeat: no-repeat;}
     100%  {background: url('../images/gandalf6.png'); background-size: contain; background-repeat: no-repeat;}
 }
+#jumpContainer
+{
+  position: fixed;
+  bottom: 20%;
+  left: 10px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+}
+#jumpContainer img
+{
 
-/* REGLES TEMPORAIRES */
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+}
+.character
+{
+  animation-duration: 0.2s;
+  animation-iteration-count: infinite;
+  animation-name: moveRight;
+}
+@keyframes moveRight {
+  0% { background: url("../images/sprite1.png"); background-size: contain; background-repeat: no-repeat;}
+  20% { background: url("../images/sprite2.png"); background-size: contain; background-repeat: no-repeat;}
+  40% { background: url("../images/sprite3.png"); background-size: contain; background-repeat: no-repeat;}
+  60% { background: url("../images/sprite4.png"); background-size: contain; background-repeat: no-repeat;}
+  80% { background: url("../images/sprite5.png"); background-size: contain; background-repeat: no-repeat;}
+  100% { background: url("../images/sprite6.png");background-size: contain; background-repeat: no-repeat;}
+}
+.characterL
+{
+  animation-duration: 0.2s;
+  animation-iteration-count: infinite;
+  animation-name: moveLeft;
+}
+@keyframes moveLeft {
+  0% { background: url("../images/spriteL1.png"); background-size: contain; background-repeat: no-repeat;}
+  20% { background: url("../images/spriteL2.png"); background-size: contain; background-repeat: no-repeat;}
+  40% { background: url("../images/spriteL3.png"); background-size: contain; background-repeat: no-repeat;}
+  60% { background: url("../images/spriteL4.png"); background-size: contain; background-repeat: no-repeat;}
+  80% { background: url("../images/spriteL5.png"); background-size: contain; background-repeat: no-repeat;}
+  100% { background: url("../images/spriteL6.png");background-size: contain; background-repeat: no-repeat;}
+}
+.opacity
+{
+  animation-duration: 8s;
+  animation-name: prog;
+}
+@keyframes prog {
+  from {opacity: 0}
+  to {opacity: 1}
+}

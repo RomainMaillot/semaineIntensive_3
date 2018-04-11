@@ -10,9 +10,10 @@ let speed = 30
 let triggerKeyDown = new Event('keydown')
 let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
-let charImg = ["./images/sprite1.png","./images/sprite2.png","./images/sprite3.png","./images/sprite4.png","./images/sprite5.png","./images/sprite6.png"]
-let charImgLeft = ["./images/spriteL1.png","./images/spriteL2.png","./images/spriteL3.png","./images/spriteL4.png","./images/spriteL5.png","./images/spriteL6.png"]
-let frameRight = 0, frameLeft = 0, go
+let go
+let jump = true
+let jumpImg = document.querySelector('#jumpContainer img')
+let jumpstop, timer2, dir
 
 const attacker = {
     score: 0,
@@ -117,7 +118,7 @@ const defenser = {
                     clearInterval(chronoTime)
                     chronoSet(400)
                     timer.classList.add('timerAccelerated')
-                    
+
                     setTimeout(() => {
                         clearInterval(chronoTime)
                         chronoSet(1000)
@@ -168,6 +169,23 @@ function init(){
   initWeapons()
   //initialise le chrono
   chronoSet(1000)
+}
+
+function moveCharacater(){
+  go = setInterval( function(){
+    if (dir == 1)
+    {
+      left += 2
+      character.style.left = left + 'px'
+      windowMove()
+    }
+    if (dir == 2 && left > 0)
+    {
+      left -= 2
+      character.style.left = left + 'px'
+      windowMove()
+    }
+  },5)
 }
 
 function initMap() {
@@ -255,54 +273,29 @@ function initMap() {
 function keyHandler (e) {
     e.preventDefault()
     let elevatorsDown = document.querySelectorAll('div[class^=corridor] img:first-of-type')
-    var rectCharacter = character.getBoundingClientRect()
+    let rectCharacter = character.getBoundingClientRect()
     let elevatorsUp = document.querySelectorAll('div[class^=corridor] img:nth-of-type(2)')
     if (e.keyCode==39)
     {
-      //déplace le personnage vers la droite
+      character.classList.add('character')
+      dir = 1
       clearInterval(go)
-       go = setInterval( function() {
-
-        if (frameRight < 5){
-          left += 10
-          character.style.left = left + 'px'
-          frameRight += 1
-          character.src = charImg[frameRight]
-        }
-        else {
-          frameRight = 0
-          left += 20
-          character.style.left = left + 'px'
-          character.src = charImg[frameRight]
-        }
-        windowMove()
-      }, speed)
+      moveCharacater()
+      if (character.classList.contains('characterL'))
+      {
+        character.classList.remove('characterL')
+      }
     }
     if (e.keyCode==37)
     {
-      //déplace le personnage vers la gauche
+      character.classList.add('characterL')
+      dir = 2
       clearInterval(go)
-       go = setInterval( function() {
-
-         if (left > 0)
-         {
-          if (frameLeft < 5){
-           left -= 10
-           character.style.left = left + 'px'
-           frameLeft += 1
-           character.src = charImgLeft[frameLeft]
-         }
-         else {
-           frameLeft = 0
-           left -= 20
-           character.style.left = left + 'px'
-           character.src = charImgLeft[frameLeft]
-         }}
-         else {
-           character.src = charImg[0]
-         }
-        windowMove()
-      }, speed)
+      moveCharacater()
+      if (character.classList.contains('character'))
+      {
+        character.classList.remove('character')
+      }
     }
 
     for (let i = 0;i<elevatorsDown.length;i++){
@@ -330,6 +323,47 @@ function keyHandler (e) {
         lane[place].appendChild(character)
       }
     }
+    if (e.keyCode == 65 && character.parentNode != lane[0] && jump == true)
+    {
+      //déplace le personnage à la ligne supérieur si un jump est disponible
+      character.parentNode.removeChild(character)
+      console.log(place)
+      place -= 1
+      console.log(place)
+      lane[place].appendChild(character)
+      jump = false
+      jumpImg.classList.add('opacity')
+      clearInterval(timer2)
+      jumpTimer(3)
+    }
+    if (e.keyCode == 81 && character.parentNode != lane[3] && jump == true)
+    {
+      //déplace le personnage à la ligne inférieur si un jump est disponible
+      character.parentNode.removeChild(character)
+      console.log(place)
+      place += 1
+      console.log(place)
+      lane[place].appendChild(character)
+      jump = false
+      jumpImg.classList.add('opacity')
+      clearInterval(timer2)
+      jumpTimer(3)
+    }
+}
+
+function jumpTimer(count) {
+  let poss = ["1","0.8","0.4","0"]
+  timer2 = setInterval(function(){
+    if (count >= 0)
+    {
+      count -= 1
+    }
+    if (count == -1)
+    {
+      jump = true
+      jumpImg.classList.remove('opacity')
+    }
+  },1000)
 }
 
 function listenArrows() {
@@ -362,12 +396,15 @@ function windowMove () {
 
 function createCharacter(){
   //on crée le personnage et on le place sur le terrains
-  character.src = charImg[0]
+  character.style.background = `url("./images/sprite1.png")`
+  character.style.backgroundSize = 'contain'
+  character.style.backgroundRepeat = 'no-repeat'
   character.style.position = 'absolute'
   character.style.top = '6vh'
   character.style.zIndex = '2000'
   character.style.left = left + 'px'
   character.style.height = '80px'
+  character.style.width = '55px'
 
   lane[place].appendChild(character)
 }
@@ -383,11 +420,11 @@ function defenseSkillsInit() {
                 case 'gandalf':
                     defenser.weapons[1].behavior(e)
                     break;
-    
+
                 case 'ascenseur':
                     defenser.weapons[2].behavior(e)
                     break;
-    
+
                 default:
                     break;
             }
@@ -456,6 +493,6 @@ function chronoSet (timerSpeed) {
         if (chronometer > 0) {
             chronometer -= 1
         }
-        document.querySelector('.timer').innerHTML = `Temps restant : ${chronometer} sec`    
+        document.querySelector('.timer').innerHTML = `Temps restant : ${chronometer} sec`
     }, timerSpeed)
 }
