@@ -1,10 +1,11 @@
 // import { attacker, defenser } from './playersData.js'
 
 let character = new Image()
+let hudButtons = document.querySelectorAll('.skill')
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
 let chronometer = 75
-var chronoTime
+var chronoTime //contient un setInterval
 let speed = 30
 let triggerKeyDown = new Event('keydown')
 let mapWrapper = document.querySelector('.map')
@@ -51,30 +52,47 @@ const defenser = {
             name: 'dossier',
             interval: 30,
             behavior: function (e) {
-                // if (this.interval === 0) {
-                //     let folder = document.createElement('div')
-                //     let posFolder = window.innerWidth + window.scrollX
-                //     folder.classList.add('folder')
-                //     e.currentTarget.appendChild(folder)
-                //     let elFolder = document.querySelector('.folder')
-                //     elFolder.left = posFolder + 'px'
-                //     setInterval(() => {
-                //         posFolder -= 10
-                //         elFolder.left = posFolder + 'px'
-                //         if (posFolder < window.scrollX) {
-                //             e.currentTarget.removeChild(elFolder)
-                //         }
-                //     }, 20)
-                //     this.interval += 30
-                // }
+                if (this.interval === 0) {
+                    defenser.activeWeapon = 'dossier'
+
+                    let folder = document.createElement('div')
+                    let posFolder = window.innerWidth + window.scrollX
+                    folder.classList.add('folder')
+                    e.currentTarget.appendChild(folder)
+                    let elFolder = document.querySelector('.folder')
+                    elFolder.style.left = posFolder + 'px'
+                    setInterval(() => {
+                        posFolder -= 10
+                        elFolder.style.left = posFolder + 'px'
+                        if (posFolder < window.scrollX) {
+                            elFolder.parentNode.removeChild(elFolder)
+                        } else if (posFolder < left + 35) {
+                            console.log('fuuf')
+                            // attacker.health -= 1
+                            elFolder.parentNode.removeChild(elFolder)
+                        }
+                    }, 20)
+                    this.interval += 30
+                }
             }
         },
         {
             name: 'gandalf',
             interval: 10,
-            behavior: (e) => {
+            behavior: function (e) {
                 if (this.interval === 0) {
-                    //actions
+                    console.log('nice')
+                    defenser.activeWeapon = 'gandalf'
+
+                    let gandalf = document.createElement('div')
+                    let posGandalf = e.pageX
+                    gandalf.classList.add('gandalfPers')
+                    e.currentTarget.appendChild(gandalf)
+                    let elGandalf = document.querySelector('.gandalfPers')
+                    elGandalf.style.left = posGandalf + 'px'
+                    setInterval(() => {
+                        elGandalf.parentNode.removeChild(elGandalf)
+                    }, 10000)
                     this.interval += 10
                 }
             }
@@ -84,7 +102,7 @@ const defenser = {
             interval: 25,
             behavior: () => {
                 if (this.interval === 0) {
-                    //actions
+                    defenser.activeWeapon = 'ascenseur'
                     this.interval += 25
                 }
             }
@@ -93,15 +111,17 @@ const defenser = {
             name: 'alarme',
             interval: 0,
             behavior: function () {
+                let timer = document.querySelector('.timer')
                 if (this.interval === 0) {
                     console.log('siiss')
                     clearInterval(chronoTime)
                     chronoSet(400)
-                    
+                    timer.classList.add('timerAccelerated')
                     
                     setTimeout(() => {
                         clearInterval(chronoTime)
                         chronoSet(1000)
+                        timer.classList.remove('timerAccelerated')
                         this.isActive = false
                     }, 6000)
                     this.interval += 25
@@ -358,14 +378,14 @@ function defenseSkillsInit() {
         lane[i].addEventListener('click', (e) => {
             switch (defenser.activeWeapon) {
                 case 'dossier':
-                    defenser.weapons[0].behavior()
+                    defenser.weapons[0].behavior(e)
                     break;
                 case 'gandalf':
-                    defenser.weapons[1].behavior()
+                    defenser.weapons[1].behavior(e)
                     break;
     
                 case 'ascenseur':
-                    defenser.weapons[2].behavior()
+                    defenser.weapons[2].behavior(e)
                     break;
     
                 default:
@@ -378,23 +398,23 @@ function defenseSkillsInit() {
 // initialise les écouteurs d'événements du HUD
 
 function hud() {
-    document.querySelector('.dossier').addEventListener('click', (e) => {
+    hudButtons[0].addEventListener('click', (e) => {
         e.preventDefault()
-        defenser.weapons[0].behavior()
+        defenser.activeWeapon = 'dossier'
     })
-    document.querySelector('.gandalf').addEventListener('click', (e) => {
+    hudButtons[1].addEventListener('click', (e) => {
         e.preventDefault()
-        defenser.weapons[1].behavior()
+        defenser.activeWeapon = 'gandalf'
     })
-    document.querySelector('.ascenseuroff').addEventListener('click', (e) => {
+    hudButtons[2].addEventListener('click', (e) => {
         e.preventDefault()
-        defenser.weapons[2].behavior()
+        defenser.activeWeapon = 'ascenseur'
     })
-    document.querySelector('.alarme').addEventListener('click', (e) => {
+    hudButtons[3].addEventListener('click', (e) => {
         e.preventDefault()
         defenser.weapons[3].behavior()
     })
-    document.querySelector('.heuresup').addEventListener('click', (e) => {
+    hudButtons[4].addEventListener('click', (e) => {
         e.preventDefault()
         defenser.weapons[4].behavior()
     })
@@ -423,15 +443,8 @@ setInterval(() => {
         if (defenser.weapons[i].interval > 0) {
             defenser.weapons[i].interval -= 1
         }
+        hudButtons[i].innerHTML = defenser.weapons[i].interval
     }
-
-    // si le boss a foutu l'alarme incendie...
-
-    // if (defenser.weapons[3].isActive) {
-    //     chronometer -= 1.5
-    // } else {
-    //     chronometer -= 1        
-    // }
     if (chronometer === 0) {
         lose()
     }

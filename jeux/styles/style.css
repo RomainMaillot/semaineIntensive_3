@@ -152,7 +152,9 @@ div[class^=corridor] img:nth-of-type(2){
     background: #DBB838;
     margin: 5px;
 }
-
+.timerAccelerated {
+    color: red;
+}
 .score {
     display: inline-block;
 }
@@ -164,11 +166,42 @@ div[class^=corridor] img:nth-of-type(2){
     height: 36px;
     position: absolute;
     animation: move 0.8s infinite;
-    background-image: url('../images/dossier.png')
+    animation-timing-function: linear;
+    background-image: url('../images/folder.png');
+    background-size: cover;
+    z-index: 2000;
+    margin-top: 35px;
+    box-shadow: 0 0 5px black;
+}
+
+.gandalfPers {
+    width: 130px;
+    height: 155px;
+    position: absolute;
+    bottom: -30px;
+    animation-name: appear;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    z-index: 2000;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/gandalf6.png');
 }
 
 @keyframes move {
     from {transform: rotate(0deg)}
     to {transform: rotate(360deg)}
 }
+
+@keyframes appear {
+    0%  {background: url('../images/gandalf0.png'); background-size: contain; background-repeat: no-repeat;}
+    16%  {background: url('../images/gandalf1.png'); background-size: contain; background-repeat: no-repeat;}
+    32%  {background: url('../images/gandalf2.png'); background-size: contain; background-repeat: no-repeat;}
+    48%  {background: url('../images/gandalf3.png'); background-size: contain; background-repeat: no-repeat;}
+    64%  {background: url('../images/gandalf4.png'); background-size: contain; background-repeat: no-repeat;}
+    80%  {background: url('../images/gandalf5.png'); background-size: contain; background-repeat: no-repeat;}
+    100%  {background: url('../images/gandalf6.png'); background-size: contain; background-repeat: no-repeat;}
+}
+
 /* REGLES TEMPORAIRES */
