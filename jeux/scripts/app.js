@@ -400,7 +400,7 @@ function createCharacter(){
   character.style.backgroundSize = 'contain'
   character.style.backgroundRepeat = 'no-repeat'
   character.style.position = 'absolute'
-  character.style.top = '6vh'
+  character.style.top = '8vh'
   character.style.zIndex = '2000'
   character.style.left = left + 'px'
   character.style.height = '80px'

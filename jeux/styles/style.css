@@ -15,7 +15,7 @@ body {
     border-bottom: 2px solid #7D3232;
     display: grid;
     width: 300%;
-    height: 70vh;
+    height: 80vh;
     grid-template-columns: repeat(60, calc(100% / 60));
     grid-template-rows: 1fr 10px 1fr 10px 1fr 10px 1fr;
     grid-gap: 0;
@@ -106,20 +106,20 @@ div[class^=corridor] img{
 div[class^=corridor] img:first-of-type{
     position: absolute;
     height: 11vh;
-    bottom: 280%;
+    bottom: 300%;
 }
 
 div[class^=corridor] img:nth-of-type(2){
     position: absolute;
     height: 11vh;
-    top: 390%;
+    top: 570%;
     filter: opacity(0.5)
 }
 .gg {
     position: fixed;
     top: 0;
     background: #DCD654;
-    width: 85%;
+    width: 100%;
     height: 100%;
     background-size: cover;
     color: white;
@@ -206,17 +206,17 @@ div[class^=corridor] img:nth-of-type(2){
 #jumpContainer
 {
   position: fixed;
-  bottom: 20%;
+  bottom: 1%;
   left: 10px;
   text-align: center;
-  width: 20px;
-  height: 20px;
+  width: 100px;
+  height: 100px;
 }
 #jumpContainer img
 {
 
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   opacity: 1;
 }
 .character
