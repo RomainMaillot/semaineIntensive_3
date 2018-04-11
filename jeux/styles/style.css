@@ -1,7 +1,19 @@
+/* IMPORTATION DES POLICES */
+
+@font-face {
+	font-family: "arcadeInter";
+	src: url('../font/ARCADE_I.ttf');
+}
+@font-face {
+	font-family: "arcade";
+	src: url('../font/ARCADE_N.ttf');
+}
+
 /* REGLES DE BASE */
 
 body {
     margin: 0;
+    font-family: "arcade";
 }
 
 /* CONSTRUCTION DE LA GRILLE */
@@ -116,21 +128,37 @@ div[class^=corridor] img:nth-of-type(2){
     filter: opacity(0.5)
 }
 .gg {
-    position: fixed;
+    position: relative;
     top: 0;
     background: #DCD654;
     width: 100%;
-    height: 100%;
-    background-size: cover;
+    height: 100vh;
     color: white;
-    text-shadow: 2px #DBB838;
-    font-size: 30vh;
-    font-family: 'Do Hyeon', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1500;
+    font-family: 'arcadeInter', sans-serif;
+    z-index: 2500;
     transition: 0.5s all ease-in-out;
+    opacity: 0;
+}
+.gg h3
+{
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  font-size: 10vh;
+}
+.gg p
+{
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  font-size: 7vh;
+}
+.gg img
+{
+  position: absolute;
+  bottom: 0;
+  right: 5%;
+  height: 80%;
 }
 
 .hud {
@@ -139,11 +167,6 @@ div[class^=corridor] img:nth-of-type(2){
     width: 40%;
     display: flex;
     justify-content: space-between;
-}
-
-.fadeOut {
-    display: none;
-    opacity: 0;
 }
 
 .timerAccelerated {

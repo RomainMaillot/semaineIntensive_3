@@ -1,6 +1,6 @@
 // import { attacker, defenser } from './playersData.js'
 
-let character = new Image()
+let character = document.createElement('div')
 let hudButtons = document.querySelectorAll('.skill')
 let lane = document.querySelectorAll('div[class^=lane]')
 let left = 0
@@ -23,26 +23,35 @@ const attacker = {
 
         // window.removeEventListener('keydown')
         let gg = document.querySelector('.gg')
-        gg.classList.remove('fadeOut')
+        mapWrapper.style.display = 'none'
+        gg.style.opacity = '1'
         clearInterval(go)
+        clearInterval(chronoTime)
+        if (character.classList.contains('characterL'))
+        {
+          character.classList.remove('characterL')
+        }
+        if (character.classList.contains('character'))
+        {
+          character.classList.remove('character')
+        }
         left = 0
-        frameRight = 0
-        frameLeft = 0
         character.parentNode.removeChild(character)
-        mapWrapper.classList.add('fadeOut')
+        setTimeout( () => {
+          gg.style.opacity = '0'
+        },1700)
         setTimeout(() => { //gère toute la partie pendant le changement de niveau
             initMap()
-            gg.classList.add('fadeOut')
-            mapWrapper.classList.remove('fadeOut')
-        }, 4000)
-        scrollTo(0, 0)
-        this.score += 1
-        if (parseInt(localStorage.getItem('bestScore')) < this.score ) {
-            localStorage.setItem('bestScore', this.score)
-        }
+            mapWrapper.style.display = 'grid'
+            scrollTo(0, 0)
+            this.score += 1
+            if (parseInt(localStorage.getItem('bestScore')) < this.score ) {
+                localStorage.setItem('bestScore', this.score)
+            }
 
-        document.querySelector('.score').innerHTML = `score : ${this.score}`
-        init()
+            document.querySelector('.score').innerHTML = `score : ${this.score}`
+            init()
+        }, 2000)
     }
 }
 
@@ -61,7 +70,7 @@ const defenser = {
                     let posFolder = window.innerWidth + window.scrollX
 
                     //enregistrement de la lane du dossier
-                    this.folderPlace = parseInt(e.currentTarget.className.replace('lane', '')) - 1                  
+                    this.folderPlace = parseInt(e.currentTarget.className.replace('lane', '')) - 1
                     folder.classList.add('folder')
                     e.currentTarget.appendChild(folder)
                     let elFolder = document.querySelector('.folder')
@@ -78,7 +87,7 @@ const defenser = {
                         }
                     }, 20)
                     this.interval += 30
-                    hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'                    
+                    hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         },
