@@ -74,6 +74,7 @@ const defenser = {
                         }
                     }, 20)
                     this.interval += 30
+                    hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'                    
                 }
             }
         },
@@ -95,6 +96,7 @@ const defenser = {
                         elGandalf.parentNode.removeChild(elGandalf)
                     }, 10000)
                     this.interval += 10
+                    hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         },
@@ -105,6 +107,7 @@ const defenser = {
                 if (this.interval === 0) {
                     defenser.activeWeapon = 'ascenseur'
                     this.interval += 25
+                    hudButtons[2].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         },
@@ -126,6 +129,7 @@ const defenser = {
                         this.isActive = false
                     }, 6000)
                     this.interval += 25
+                    hudButtons[3].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         },
@@ -146,6 +150,7 @@ const defenser = {
                         moveCharacater()
                     }, 5000)
                     this.interval += 25
+                    hudButtons[4].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         }
@@ -480,8 +485,10 @@ setInterval(() => {
     for (let i = 0; i < defenser.weapons.length; i++) {
         if (defenser.weapons[i].interval > 0) {
             defenser.weapons[i].interval -= 1
+        } else {
+            hudButtons[i].style = ''
         }
-        hudButtons[i].innerHTML = defenser.weapons[i].interval
+        // hudButtons[i].innerHTML = defenser.weapons[i].interval
     }
     if (chronometer === 0) {
         lose()

@@ -261,23 +261,32 @@ div[class^=corridor] img:nth-of-type(2){
 /* RELATIF A L'INTERFACE */
 
 .buttons {
-    width: 30%;
+    width: 25%;
     position: fixed;
-    bottom: 30px;
+    bottom: 20px;
     right: 30px;
     display: flex;
     justify-content: space-between;
 }
 
 .skill {
-    width: 18%;
-    height: 5vh;
-    background: #DBB838;
+    width: 12%;
+    border-radius: 100%;
+    border: 4px solid aqua;
 }
 .skill img {
     width: 100%;
     height: 100%
 }
-.dossier {
-    
+
+.onload {
+    animation: reload 15s linear 1;
+}
+
+@keyframes reload {
+    0% {border: 4px solid rgba(0, 0, 0, 0.1);}
+    25% {border-right: 4px solid rgba(0, 0, 0, 0.1); border-bottom: 4px solid rgba(0, 0, 0, 0.1); border-left: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid aqua;}
+    50% {border-bottom: 4px solid rgba(0, 0, 0, 0.1); border-left: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid aqua; border-right: 4px solid aqua}
+    75% {border-left: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid aqua; border-right: 4px solid aqua; border-bottom: 4px solid aqua}
+    100% {border-top: 4px solid aqua; border-right: 4px solid aqua; border-bottom: 4px solid aqua; border-left: 4px solid aqua}
 }
