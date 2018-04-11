@@ -445,6 +445,9 @@ function createCharacter(){
   character.style.width = '55px'
 
   lane[place].appendChild(character)
+
+  attacker.health = 3
+  speed = 4
 }
 
 // génère l'action souhaitée sur le terrain en fonction de l'arme choisie
