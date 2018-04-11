@@ -139,11 +139,17 @@ const defenser = {
         {
             name: 'ascenseur',
             interval: 25,
-            behavior: () => {
+            behavior: function (e) {
                 if (this.interval === 0) {
                     defenser.activeWeapon = 'ascenseur'
-                    this.interval += 25
-                    hudButtons[2].style.animation = 'reload ' + this.interval +'s linear 1'
+                    let strikedElevator = e.currentTarget
+                    strikedElevator.parentNode.childNodes[0].classList.add('unactivated')
+                    strikedElevator.parentNode.childNodes[1].classList.add('unactivated')
+                    
+                    setTimeout(() => {
+                        strikedElevator.parentNode.childNodes[0].classList.remove('unactivated')
+                        strikedElevator.parentNode.childNodes[1].classList.remove('unactivated')
+                    }, 8000)
                 }
             }
         },
@@ -344,10 +350,10 @@ function keyHandler (e) {
       let rectElevatorsDown = elevatorsDown[i].getBoundingClientRect()
       if (e.keyCode == 40 && (elevatorsDown[i].parentNode.offsetLeft - 20) <= left && (elevatorsDown[i].parentNode.offsetLeft + elevatorsDown[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[3] && rectElevatorsDown.top<=rectCharacter.top && (rectElevatorsDown.bottom+30)>=rectCharacter.bottom)
       {
-        //déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
-         character.parentNode.removeChild(character)
-         place += 1
-         lane[place].appendChild(character)
+        if (!elevatorsDown[i].classList.contains('unactivated')){//déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
+            character.parentNode.removeChild(character)
+            place += 1
+            lane[place].appendChild(character)}
       }
     }
     for (let i = 0;i<elevatorsUp.length;i++)
@@ -355,10 +361,10 @@ function keyHandler (e) {
       let rectElevatorsUp = elevatorsUp[i].getBoundingClientRect()
       if (e.keyCode==38 && (elevatorsUp[i].parentNode.offsetLeft - 20) <= left && (elevatorsUp[i].parentNode.offsetLeft + elevatorsUp[i].width + 20)>=(left + character.offsetWidth) && character.parentNode != lane[0] && rectElevatorsUp.top<=rectCharacter.top && (rectElevatorsUp.bottom+30)>=rectCharacter.bottom)
       {
-        //déplace le personnage à la ligne supérieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
-        character.parentNode.removeChild(character)
-        place -= 1
-        lane[place].appendChild(character)
+        if (!elevatorsUp[i].classList.contains('unactivated')){//déplace le personnage à la ligne supérieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
+            character.parentNode.removeChild(character)
+            place -= 1
+            lane[place].appendChild(character)}
       }
     }
     if (e.keyCode == 65 && character.parentNode != lane[0] && jump == true)
@@ -443,6 +449,7 @@ function createCharacter(){
 
 // génère l'action souhaitée sur le terrain en fonction de l'arme choisie
 function defenseSkillsInit() {
+    let corridors = document.querySelectorAll('div[class^=corridor]')
     for (let i = 0; i < lane.length; i++) {
         lane[i].addEventListener('click', (e) => {
             switch (defenser.activeWeapon) {
@@ -453,12 +460,20 @@ function defenseSkillsInit() {
                     defenser.weapons[1].behavior(e)
                     break;
 
-                case 'ascenseur':
-                    defenser.weapons[2].behavior(e)
-                    break;
-
                 default:
                     break;
+            }
+        })
+    }
+    for (let i = 0; i < corridors.length; i++) {
+        corridors[i].childNodes[0].addEventListener('click', (e) => {
+            if (defenser.activeWeapon = 'ascenseur') {
+                defenser.weapons[2].behavior(e)
+            }
+        })
+        corridors[i].childNodes[1].addEventListener('click', (e) => {
+            if (defenser.activeWeapon = 'ascenseur') {
+                defenser.weapons[2].behavior(e)
             }
         })
     }

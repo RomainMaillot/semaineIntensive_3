@@ -321,3 +321,7 @@ div[class^=corridor] img:nth-of-type(2){
     75% {border-left: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid aqua; border-right: 4px solid aqua; border-bottom: 4px solid aqua}
     100% {border-top: 4px solid aqua; border-right: 4px solid aqua; border-bottom: 4px solid aqua; border-left: 4px solid aqua}
 }
+
+.unactivated {
+    filter: brightness(0.5);
+}
