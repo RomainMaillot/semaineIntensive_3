@@ -81,7 +81,6 @@ const defenser = {
                         if (posFolder < window.scrollX) {
                             elFolder.parentNode.removeChild(elFolder)
                         } else if (posFolder < left + 35 && this.folderPlace === place) {
-                            console.log('fuuf')
                             // attacker.health -= 1
                             elFolder.parentNode.removeChild(elFolder)
                         }
@@ -140,7 +139,6 @@ const defenser = {
             behavior: function () {
                 let timer = document.querySelector('.timer')
                 if (this.interval === 0) {
-                    console.log('siiss')
                     clearInterval(chronoTime)
                     chronoSet(400)
                     timer.classList.add('timerAccelerated')
@@ -161,7 +159,6 @@ const defenser = {
             interval: 0,
             behavior: function () {
                 if (this.interval === 0) {
-                    console.log('jaaj')
                     clearInterval(go)
                     speed = 9
                     moveCharacater()
@@ -333,9 +330,7 @@ function keyHandler (e) {
       {
         //déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
          character.parentNode.removeChild(character)
-         console.log(place)
          place += 1
-         console.log(place)
          lane[place].appendChild(character)
       }
     }
@@ -346,9 +341,7 @@ function keyHandler (e) {
       {
         //déplace le personnage à la ligne supérieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
         character.parentNode.removeChild(character)
-        console.log(place)
         place -= 1
-        console.log(place)
         lane[place].appendChild(character)
       }
     }
@@ -356,9 +349,7 @@ function keyHandler (e) {
     {
       //déplace le personnage à la ligne supérieur si un jump est disponible
       character.parentNode.removeChild(character)
-      console.log(place)
       place -= 1
-      console.log(place)
       lane[place].appendChild(character)
       jump = false
       jumpImg.classList.add('opacity')
@@ -369,9 +360,7 @@ function keyHandler (e) {
     {
       //déplace le personnage à la ligne inférieur si un jump est disponible
       character.parentNode.removeChild(character)
-      console.log(place)
       place += 1
-      console.log(place)
       lane[place].appendChild(character)
       jump = false
       jumpImg.classList.add('opacity')
@@ -381,7 +370,6 @@ function keyHandler (e) {
 }
 
 function jumpTimer(count) {
-  let poss = ["1","0.8","0.4","0"]
   timer2 = setInterval(function(){
     if (count >= 0)
     {
@@ -419,7 +407,6 @@ function windowMove () {
     }
     if (left > window.innerWidth * 2.9) {
         attacker.win()
-        console.log('faaf')
     }
 }
 
