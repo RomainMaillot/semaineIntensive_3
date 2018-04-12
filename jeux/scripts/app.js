@@ -12,7 +12,6 @@ let cpuClick = new Event('click')
 let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
 let go
-let jump = true
 let jumpImg = document.querySelector('#jumpContainer img')
 let jumpstop, timer2, dir
 let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar2.png','./images/lifebar3.png']
@@ -149,7 +148,7 @@ const defenser = {
 
                     strikedElevator.parentNode.childNodes[0].src = 'images/elevator_problem.png'
                     strikedElevator.parentNode.childNodes[1].src = 'images/elevator_problem.png'
-                    
+
                     setTimeout(() => {
                         strikedElevator.parentNode.childNodes[0].classList.remove('unactivated')
                         strikedElevator.parentNode.childNodes[1].classList.remove('unactivated')
@@ -211,7 +210,7 @@ const cpu = {
             // dois-je jouer?
             let shallPlay = Math.floor(Math.random() * 2)
             if (shallPlay === 1) {
-                
+
                 // sur quelle ligne dois-je jouer?
                 // let randomLane = Math.floor(Math.random() * 5)
                 cpuClick.currentTarget = window
@@ -243,7 +242,8 @@ function init(){
   //initialise le chrono
   chronometer = 75
   chronoSet(1000)
-  life = 3
+  attacker.health = 3
+  lifebar.setAttribute('src', './images/lifebar4.png')
 }
 
 function moveCharacater () {
@@ -394,24 +394,24 @@ function keyHandler (e) {
             lane[place].appendChild(character)}
       }
     }
-    if (e.keyCode == 65 && character.parentNode != lane[0] && jump == true)
+    if (e.keyCode == 65 && character.parentNode != lane[0] && attacker.hasJump)
     {
       //déplace le personnage à la ligne supérieur si un jump est disponible
       character.parentNode.removeChild(character)
       place -= 1
       lane[place].appendChild(character)
-      jump = false
+      attacker.hasJump = false
       jumpImg.classList.add('opacity')
       clearInterval(timer2)
       jumpTimer(3)
     }
-    if (e.keyCode == 81 && character.parentNode != lane[3] && jump == true)
+    if (e.keyCode == 81 && character.parentNode != lane[3] && attacker.hasJump)
     {
       //déplace le personnage à la ligne inférieur si un jump est disponible
       character.parentNode.removeChild(character)
       place += 1
       lane[place].appendChild(character)
-      jump = false
+      attacker.hasJump = false
       jumpImg.classList.add('opacity')
       clearInterval(timer2)
       jumpTimer(3)
@@ -426,7 +426,7 @@ function jumpTimer(count) {
     }
     if (count == -1)
     {
-      jump = true
+      attacker.hasJump = true
       jumpImg.classList.remove('opacity')
     }
   },1000)
