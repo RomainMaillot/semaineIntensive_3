@@ -247,13 +247,13 @@ function init(){
 
 function moveCharacater () {
     go = setInterval( function(){
-    if (dir == 1 && ( left < defenser.weapons[1].falseWallPos - 50 || defenser.weapons[1].gandalfPlace !== place) )
+    if (dir == 1 && ( (left < defenser.weapons[1].falseWallPos - 50 || left > defenser.weapons[1].falseWallPos) || defenser.weapons[1].gandalfPlace !== place) )
     {
       left += 2
       character.style.left = left + 'px'
       windowMove()
     }
-    if (dir == 2 && left > 0)
+    if (dir == 2 && left > 0 && ( ( left > defenser.weapons[1].falseWallPos + 50 || left < defenser.weapons[1].falseWallPos) || defenser.weapons[1].gandalfPlace !== place) )
     {
       left -= 2
       character.style.left = left + 'px'

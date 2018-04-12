@@ -164,7 +164,7 @@ div[class^=corridor] img:nth-of-type(2){
 
 .hud {
     position: fixed;
-    top: 0;
+    top: 1%;
     width: 40%;
     display: flex;
     justify-content: space-between;
