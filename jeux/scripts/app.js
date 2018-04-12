@@ -14,12 +14,12 @@ let place = Math.floor(Math.random()*4)
 let go
 let jumpImg = document.querySelector('#jumpContainer img')
 let jumpstop, timer2, dir
-let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar2.png','./images/lifebar3.png']
+let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar3.png']
 let reset = document.querySelector('#reset')
 
 const attacker = {
     score: 0,
-    health: 3,
+    health: 2,
     hasJump: true,
     win : function () {
 
@@ -137,7 +137,7 @@ const defenser = {
                     }, 20)
                     this.interval += 4
                     hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'
-                    hudButtons[0].classList.remove('focus')                    
+                    hudButtons[0].classList.remove('focus')
                     setTimeout(() => {
                         hudButtons[0].style.animation = ''
                     }, this.interval * 1000)
@@ -173,7 +173,7 @@ const defenser = {
                     }, 5000)
                     this.interval += 6
                     hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
-                    hudButtons[1].classList.remove('focus')                    
+                    hudButtons[1].classList.remove('focus')
                     setTimeout(() => {
                         hudButtons[1].style.animation = ''
                     }, this.interval * 1000)
@@ -283,6 +283,22 @@ const cpu = {
     }
 }
 
+const gameData = {
+  world: 1,
+  background: function () {
+    let backgrounds = ['./images/lane1_background.png','./images/lane2_background.png','./images/lane3_background.png','./images/lane4_background.png']
+    let lanes = document.querySelectorAll('div[class^=lane]')
+    if (gameData.world == 1)
+    {
+      for (let i = 0;i<lanes.length;i++)
+      {
+        lanes[i].style.background = `url(${backgrounds[i]})`
+        lanes[i].style.backgroundSize = 'contain'
+      }
+    }
+  }
+}
+
 init()
 
 function init(){
@@ -291,6 +307,7 @@ function init(){
   createCharacter()
   //on génere la map aléatoirement
   initMap()
+  gameData.background()
   //on regarde les déplacement du personnage
   listenArrows()
   //on écoute les attaques du défenseurs au clic
@@ -302,7 +319,7 @@ function init(){
   //initialise le chrono
   chronometer = 50
   chronoSet(1000)
-  attacker.health = 3
+  attacker.health = 2
   lifebar.setAttribute('src', './images/lifebar4.png')
   // réinitialise les malus
   resetMalus()
@@ -575,7 +592,7 @@ function hud() {
     hudButtons[1].addEventListener('click', (e) => {
         e.preventDefault()
         defenser.activeWeapon = 'gandalf'
-        e.currentTarget.classList.add('focus')        
+        e.currentTarget.classList.add('focus')
     })
     hudButtons[2].addEventListener('click', (e) => {
         e.preventDefault()
