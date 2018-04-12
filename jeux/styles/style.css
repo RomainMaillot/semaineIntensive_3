@@ -178,6 +178,64 @@ div[class^=corridor] img:nth-of-type(2){
   height: 80%;
 }
 
+.youLose
+{
+		width: 100%;
+		height: 100%;
+		display: none;
+		position: relative;;
+		z-index: 2000;
+		top: 0;
+}
+
+.youLose img
+{
+	width: 100%;
+	height: 102%;
+}
+
+.youLose_text
+{
+	font-family: 'arcadeInter', sans-serif;
+	color: white;
+	font-size: 8vh;
+	top: 40%;
+	left: 8%;
+	position: absolute;
+	width: 30%;
+}
+
+.youLose_text a
+{
+	text-decoration: none;
+	color: white;
+}
+
+.youLose_text a img
+{
+	display:none;
+	width:3%;
+	height:7%;
+	left: 2%;
+	position: fixed;
+}
+.youLose_text a:first-of-type img
+{
+	top: 49%
+}
+.youLose_text a:nth-child(2) img
+{
+	top: 68%
+}
+.youLose_text a:hover img
+{
+	display:block;
+}
+.youLose_text a:hover
+{
+	color: #B40B19;
+}
+
 .hud {
     position: fixed;
     top: 1%;

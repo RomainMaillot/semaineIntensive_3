@@ -141,7 +141,7 @@ const defenser = {
                     this.interval += 5
                     hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'
                     setTimeout(() => {
-                        hudButtons[0].style.animation = ''        
+                        hudButtons[0].style.animation = ''
                     }, this.interval * 1000)
                 }
             }
@@ -176,7 +176,7 @@ const defenser = {
                     this.interval += 6
                     hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
                     setTimeout(() => {
-                        hudButtons[1].style.animation = ''        
+                        hudButtons[1].style.animation = ''
                     }, this.interval * 1000)
                 }
             }
@@ -201,7 +201,7 @@ const defenser = {
                     this.interval += 15
                     hudButtons[2].style.animation = 'reload ' + this.interval +'s linear 1'
                     setTimeout(() => {
-                        hudButtons[2].style.animation = ''        
+                        hudButtons[2].style.animation = ''
                     }, this.interval * 1000)
                 }
             }
@@ -225,7 +225,7 @@ const defenser = {
                     this.interval += 15
                     hudButtons[3].style.animation = 'reload ' + this.interval +'s linear 1'
                     setTimeout(() => {
-                        hudButtons[3].style.animation = ''        
+                        hudButtons[3].style.animation = ''
                     }, this.interval * 1000)
                 }
             }
@@ -248,7 +248,7 @@ const defenser = {
                     this.interval += 10
                     hudButtons[4].style.animation = 'reload ' + this.interval +'s linear 1'
                     setTimeout(() => {
-                        hudButtons[4].style.animation = ''        
+                        hudButtons[4].style.animation = ''
                     }, this.interval * 1000)
                 }
             }
@@ -616,6 +616,25 @@ function resetMalus() {
 
 function lose() {
     console.log('t\'as perdu! et moi j\'ai gagné!')
+
+    // window.removeEventListener('keydown')
+    let youLose = document.querySelector('.youLose')
+    mapWrapper.style.display = 'none'
+    setTimeout( () => {
+      youLose.style.opacity = '1'
+    },10)
+      youLose.style.display = 'block'
+    clearInterval(go)
+    if (character.classList.contains('characterL'))
+    {
+      character.classList.remove('characterL')
+    }
+    if (character.classList.contains('character'))
+    {
+      character.classList.remove('character')
+    }
+    left = 0
+    character.parentNode.removeChild(character)
 }
 
 //à chaque seconde, recharge des compétences du boss et décompte du temps
