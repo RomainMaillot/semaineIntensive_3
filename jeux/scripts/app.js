@@ -304,7 +304,7 @@ function init(){
   lifebar.setAttribute('src', './images/lifebar4.png')
   // réinitialise les malus
   resetMalus()
-//   cpu.play()
+    // cpu.play()
 }
 
 function moveCharacater () {

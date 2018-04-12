@@ -376,8 +376,10 @@ div[class^=corridor] img:nth-of-type(2){
 
 .skill {
     width: 12%;
+    height: 4vh;
     border-radius: 100%;
     border: 4px solid aqua;
+    box-shadow: 1px 3px 0 darkslategrey;
 }
 .skill img {
     width: 100%;
@@ -389,13 +391,58 @@ div[class^=corridor] img:nth-of-type(2){
 }
 
 @keyframes reload {
-    0% {border: 4px solid rgba(0, 0, 0, 0.1);}
-    25% {border-right: 4px solid rgba(0, 0, 0, 0.1); border-bottom: 4px solid rgba(0, 0, 0, 0.1); border-left: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid aqua;}
-    50% {border-bottom: 4px solid rgba(0, 0, 0, 0.1); border-left: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid aqua; border-right: 4px solid aqua}
-    75% {border-left: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid aqua; border-right: 4px solid aqua; border-bottom: 4px solid aqua}
+    0% {border: 4px solid darkslategrey;}
+    25% {border-right: 4px solid darkslategrey; border-bottom: 4px solid darkslategrey; border-left: 4px solid darkslategrey; border-top: 4px solid aqua;}
+    50% {border-bottom: 4px solid darkslategrey; border-left: 4px solid darkslategrey; border-top: 4px solid aqua; border-right: 4px solid aqua}
+    75% {border-left: 4px solid darkslategrey; border-top: 4px solid aqua; border-right: 4px solid aqua; border-bottom: 4px solid aqua}
     100% {border-top: 4px solid aqua; border-right: 4px solid aqua; border-bottom: 4px solid aqua; border-left: 4px solid aqua}
 }
 
 .unactivated {
     filter: brightness(0.8);
+}
+.dossier {
+    background-image: url('../images/dossier.png');
+    background-position: center;
+    background-size: cover;
+}
+.dossier:focus{
+    box-shadow: none;
+    transform: translate(2px, 2px)
+}
+.gandalf {
+    background-image: url('../images/gandalf.png');
+    background-position: center;
+    background-size: cover;
+}
+.gandalf:focus{
+    box-shadow: none;
+    transform: translate(2px, 2px)
+}
+.ascenseuroff {
+    background-image: url('../images/ascenseuroff.png');
+    background-position: center;
+    background-size: cover;
+}
+.ascenseuroff:active{
+    box-shadow: none;
+    transform: translate(2px, 2px)
+}
+.alarme {
+    background-image: url('../images/alarme.png');
+    background-position: center;
+    background-size: cover;
+}
+.alarme:active{
+    box-shadow: none;
+    transform: translate(2px, 2px)
+}
+.heuresup {
+    background-image: url('../images/heuresup.png');
+    background-position: center;
+    background-size: cover;
+}
+.heuresup:active{
+    box-shadow: none;
+    transform: translate(2px, 2px)
 }
