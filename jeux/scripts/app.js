@@ -57,6 +57,45 @@ const attacker = {
             clearInterval(chronoTime)
             init()
         }, 2000)
+    },
+    lose: function () {
+        let defeat = document.querySelector('.defeat')
+        mapWrapper.style.display = 'none'
+        setTimeout( () => {
+          defeat.style.opacity = '1'
+        },50)
+        defeat.style.display = 'block'
+        clearInterval(go)
+        if (character.classList.contains('characterL'))
+        {
+          character.classList.remove('characterL')
+        }
+        if (character.classList.contains('character'))
+        {
+          character.classList.remove('character')
+        }
+        left = 0
+        character.parentNode.removeChild(character)
+        setTimeout(() => {
+          defeat.style.opacity = '0'
+        }, 1700)
+        setTimeout(() => { //gère toute la partie pendant le changement de niveau
+            initMap()
+            mapWrapper.style.display = 'grid'
+            defeat.style.display = 'none'
+            scrollTo(0, 0)
+
+            //enregistre le score du joueur 1
+            localStorage.setItem('score1', this.score)
+
+            if (parseInt(localStorage.getItem('bestScore')) < this.score ) {
+                localStorage.setItem('bestScore', this.score)
+            }
+
+            document.querySelector('.score').innerHTML = `score : ${this.score}`
+            clearInterval(chronoTime)
+            init()
+        }, 1500)
     }
 }
 
@@ -92,7 +131,7 @@ const defenser = {
                         else if (posFolder < left + 35 && posFolder + elFolder.offsetWidth > left + character.offsetWidth && this.folderPlace === place) {
                             attacker.health -= 1
                             console.log(attacker.health)
-                            lifebar.setAttribute('src',lifebarImg[attacker.health])
+                            lifebar.setAttribute('src', lifebarImg[attacker.health])
                             if(elFolder.parentNode != null)
                             {
                               elFolder.parentNode.removeChild(elFolder)
@@ -101,6 +140,9 @@ const defenser = {
                     }, 20)
                     this.interval += 5
                     hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'
+                    setTimeout(() => {
+                        hudButtons[0].style.animation = ''        
+                    }, this.interval * 1000)
                 }
             }
         },
@@ -130,9 +172,12 @@ const defenser = {
                     setTimeout(() => {
                         elGandalf.parentNode.removeChild(elGandalf)
                         this.falseWallPos = 5000
-                    }, 10000)
-                    this.interval += 5
+                    }, 5000)
+                    this.interval += 6
                     hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
+                    setTimeout(() => {
+                        hudButtons[1].style.animation = ''        
+                    }, this.interval * 1000)
                 }
             }
         },
@@ -155,6 +200,9 @@ const defenser = {
                     }
                     this.interval += 15
                     hudButtons[2].style.animation = 'reload ' + this.interval +'s linear 1'
+                    setTimeout(() => {
+                        hudButtons[2].style.animation = ''        
+                    }, this.interval * 1000)
                 }
             }
         },
@@ -176,6 +224,9 @@ const defenser = {
                     }, 6000)
                     this.interval += 15
                     hudButtons[3].style.animation = 'reload ' + this.interval +'s linear 1'
+                    setTimeout(() => {
+                        hudButtons[3].style.animation = ''        
+                    }, this.interval * 1000)
                 }
             }
         },
@@ -196,6 +247,9 @@ const defenser = {
                     }, 5000)
                     this.interval += 10
                     hudButtons[4].style.animation = 'reload ' + this.interval +'s linear 1'
+                    setTimeout(() => {
+                        hudButtons[4].style.animation = ''        
+                    }, this.interval * 1000)
                 }
             }
         }
@@ -207,21 +261,26 @@ const cpu = {
     play: function () {
         setInterval(() => {
             // dois-je jouer?
-            let shallPlay = Math.floor(Math.random() * 2)
-            if (shallPlay === 1) {
-
-                if (defenser.weapons[0].interval === 0) {
-                    // sur quelle ligne dois-je jouer?
-                    defenser.weapons[0].behavior(lane[place])
-                }
-                if (defenser.weapons[1].interval === 0) {
-                    // sur quelle ligne dois-je jouer?
-                    defenser.weapons[1].behavior(lane[place], window.innerWidth + left)
-                }
-                
-
+            let shallPlay = Math.floor(Math.random() * 5)
+            if (defenser.weapons[0].interval === 0 && shallPlay === 0) {
+                // sur quelle ligne dois-je jouer?
+                defenser.weapons[0].behavior(lane[place])
             }
-        }, 2000)
+            if (defenser.weapons[1].interval === 0 && shallPlay === 1) {
+                // sur quelle ligne dois-je jouer?
+                let randPlace = Math.floor(Math.random() * window.innerWidth / 2 + left)
+                defenser.weapons[1].behavior(lane[place], randPlace)
+            }
+            if (defenser.weapons[2].interval === 0 && shallPlay === 2) {
+                defenser.weapons[2].behavior()
+            }
+            if (defenser.weapons[3].interval === 0 && shallPlay === 3) {
+                defenser.weapons[3].behavior()
+            }
+            if (defenser.weapons[4].interval === 0 && shallPlay === 4) {
+                defenser.weapons[4].behavior()
+            }
+        }, 1000)
     }
 }
 
@@ -246,6 +305,9 @@ function init(){
   chronoSet(1000)
   attacker.health = 3
   lifebar.setAttribute('src', './images/lifebar4.png')
+  // réinitialise les malus
+  resetMalus()
+//   cpu.play()
 }
 
 function moveCharacater () {
@@ -463,6 +525,7 @@ function windowMove () {
 
 function createCharacter(){
   //on crée le personnage et on le place sur le terrains
+  left = 0
   character.style.background = `url("./images/sprite1.png")`
   character.style.backgroundSize = 'contain'
   character.style.backgroundRepeat = 'no-repeat'
@@ -477,6 +540,7 @@ function createCharacter(){
 
   attacker.health = 3
   speed = 4
+  dir = null
 }
 
 // génère l'action souhaitée sur le terrain en fonction de l'arme choisie
@@ -537,6 +601,17 @@ function initWeapons() {
     defenser.weapons[4].interval = 0
 }
 
+function resetMalus() {
+    let gandalfs = document.querySelectorAll('.gandalfPers')
+    let folders = document.querySelectorAll('.folder')
+    for (let i = 0; i < gandalfs.length; i++) {
+        gandalfs[i].parentNode.removeChild(gandalfs[i])
+    }
+    for (let i = 0; i < folders.length; i++) {
+        folders[i].parentNode.removeChild(folders[i])
+    }
+}
+
 //fonction qui prend en charge la défaite
 
 function lose() {
@@ -571,4 +646,8 @@ function chronoSet (timerSpeed) {
         }
         document.querySelector('.timer').innerHTML = `Temps restant : ${chronometer} sec`
     }, timerSpeed)
+}
+
+function swapPlayer () {
+
 }
