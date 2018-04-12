@@ -135,8 +135,9 @@ const defenser = {
                             }
                         }
                     }, 20)
-                    this.interval += 5
+                    this.interval += 4
                     hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'
+                    hudButtons[0].classList.remove('focus')                    
                     setTimeout(() => {
                         hudButtons[0].style.animation = ''
                     }, this.interval * 1000)
@@ -172,6 +173,7 @@ const defenser = {
                     }, 5000)
                     this.interval += 6
                     hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
+                    hudButtons[1].classList.remove('focus')                    
                     setTimeout(() => {
                         hudButtons[1].style.animation = ''
                     }, this.interval * 1000)
@@ -242,7 +244,7 @@ const defenser = {
                         speed = 4
                         moveCharacater()
                     }, 5000)
-                    this.interval += 10
+                    this.interval += 8
                     hudButtons[4].style.animation = 'reload ' + this.interval +'s linear 1'
                     setTimeout(() => {
                         hudButtons[4].style.animation = ''
@@ -464,7 +466,7 @@ function keyHandler (e) {
       attacker.hasJump = false
       jumpImg.classList.add('opacity')
       clearInterval(timer2)
-      jumpTimer(3)
+      jumpTimer(8)
     }
     if (e.keyCode == 81 && character.parentNode != lane[3] && attacker.hasJump)
     {
@@ -475,17 +477,17 @@ function keyHandler (e) {
       attacker.hasJump = false
       jumpImg.classList.add('opacity')
       clearInterval(timer2)
-      jumpTimer(3)
+      jumpTimer(8)
     }
 }
 
 function jumpTimer(count) {
   timer2 = setInterval(function(){
-    if (count >= 0)
+    if (count > 0)
     {
       count -= 1
     }
-    if (count == -1)
+    if (count == 0)
     {
       attacker.hasJump = true
       jumpImg.classList.remove('opacity')
@@ -568,10 +570,12 @@ function hud() {
     hudButtons[0].addEventListener('click', (e) => {
         e.preventDefault()
         defenser.activeWeapon = 'dossier'
+        e.currentTarget.classList.add('focus')
     })
     hudButtons[1].addEventListener('click', (e) => {
         e.preventDefault()
         defenser.activeWeapon = 'gandalf'
+        e.currentTarget.classList.add('focus')        
     })
     hudButtons[2].addEventListener('click', (e) => {
         e.preventDefault()
