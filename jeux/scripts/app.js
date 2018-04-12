@@ -11,7 +11,7 @@ let triggerKeyDown = new Event('keydown')
 let cpuClick = new Event('click')
 let mapWrapper = document.querySelector('.map')
 let place = Math.floor(Math.random()*4)
-let go
+let go, game = 1
 let jumpImg = document.querySelector('#jumpContainer img')
 let jumpstop, timer2, dir
 let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar3.png']
@@ -63,6 +63,31 @@ const attacker = {
         // window.removeEventListener('keydown')
         let youLose = document.querySelector('.youLose')
         mapWrapper.style.display = 'none'
+        if (gameData.gamemode == 1)
+        {
+          if (game == 1)
+          {
+            document.querySelector('#reset').innerHTML = 'swap'
+            localStorage.setItem('scorePlayer1',attacker.score)
+            console.log('game 1')
+          }
+          if (game == 2)
+          {
+            console.log('game 2')
+            document.querySelector('#reset').innerHTML = 'retry'
+            if (attacker.score > localStorage.getItem('scorePlayer1'))
+            {
+              document.querySelector('.youLose h2').innerHTML = 'Player 2 win'
+            }
+            else if (attacker.score < localStorage.getItem('scorePlayer1'))
+            {
+              document.querySelector('.youLose h2').innerHTML = 'Player 1 win'
+            }
+            else {
+              document.querySelector('.youLose h2').innerHTML = 'tie'
+            }
+          }
+        }
         setTimeout( () => {
           youLose.style.opacity = '1'
         },10)
@@ -90,6 +115,21 @@ const attacker = {
               youLose.style.display = 'none'
               scrollTo(0, 0)
               clearInterval(chronoTime)
+              if (gameData.gamemode == 0)
+              {
+                attacker.score = 0
+                document.querySelector('.score').innerHTML = `score : ${attacker.score}`
+              }
+              if (gameData.gamemode == 1 && game == 1)
+              {
+                game += 1
+                attacker.score = 0
+                document.querySelector('.score').innerHTML = `score : ${attacker.score}`
+              }
+              else if (gameData.gamemode == 1 && game == 1)
+              {
+                game = 1
+              }
               init()
           }, 2000)
         })
@@ -194,7 +234,8 @@ const defenser = {
                       setTimeout(() => {
                           elevators[i].classList.remove('unactivated')
 
-                          elevators[i].setAttribute('src','images/elevator_door.png')
+                          elevators[i].parentNode.childNodes[0].setAttribute('src','images/elevator_door.png')
+                          elevators[i].parentNode.childNodes[1].setAttribute('src','images/elevator_door2.png')
                       }, 8000)
                     }
                     this.interval += 15
@@ -284,6 +325,7 @@ const cpu = {
 }
 
 const gameData = {
+  gamemode: localStorage.getItem('gameMode'),
   world: 1,
   background: function () {
     let backgrounds = ['./images/lane1_background.png','./images/lane2_background.png','./images/lane3_background.png','./images/lane4_background.png']
@@ -305,6 +347,7 @@ function init(){
   //on initialise le jeux
   //on crée le personnage et on le place
   createCharacter()
+  attacker.hasJump = true
   //on génere la map aléatoirement
   initMap()
   gameData.background()
@@ -323,7 +366,10 @@ function init(){
   lifebar.setAttribute('src', './images/lifebar4.png')
   // réinitialise les malus
   resetMalus()
-    // cpu.play()
+  if (gameData.gamemode == 0)
+  {
+    cpu.play()
+  }
 }
 
 function moveCharacater () {
@@ -522,8 +568,14 @@ function setElevators() {
     for (let i = 0; i < elevators.length; i++) {
         for (let j = 0; j < 2; j++) {
             let elevator = document.createElement('img')
-            elevator.setAttribute('src', 'images/elevator_door.png')
-            elevators[i].appendChild(elevator)
+            if (j == 0){
+              elevator.setAttribute('src', 'images/elevator_door.png')
+              elevators[i].appendChild(elevator)
+            }
+            else {
+              elevator.setAttribute('src', 'images/elevator_door2.png')
+              elevators[i].appendChild(elevator)
+            }
         }
     }
 }

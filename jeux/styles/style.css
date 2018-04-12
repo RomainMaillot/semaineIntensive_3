@@ -121,7 +121,6 @@ div[class^=corridor] img:nth-of-type(2){
     position: absolute;
     height: 11vh;
     top: 570%;
-    filter: opacity(0.5)
 }
 .gg {
     position: relative;
@@ -173,7 +172,13 @@ div[class^=corridor] img:nth-of-type(2){
 	width: 100%;
 	height: 102%;
 }
-
+.youLose h2
+{
+	position: absolute;
+	top: 5%;
+	left: 1%;
+	color: white;
+}
 .youLose_text
 {
 	font-family: 'arcadeInter', sans-serif;
