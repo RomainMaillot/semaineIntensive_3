@@ -67,7 +67,7 @@ const defenser = {
             name: 'dossier',
             interval: 0,
             folderPlace: null,
-            behavior: function (e) {
+            behavior: function (laneTargetted) {
                 if (this.interval === 0) {
                     defenser.activeWeapon = 'dossier'
 
@@ -75,9 +75,9 @@ const defenser = {
                     let posFolder = window.innerWidth + window.scrollX
 
                     //enregistrement de la lane du dossier
-                    this.folderPlace = parseInt(e.currentTarget.className.replace('lane', '')) - 1
+                    this.folderPlace = parseInt(laneTargetted.className.replace('lane', '')) - 1
                     folder.classList.add('folder')
-                    e.currentTarget.appendChild(folder)
+                    laneTargetted.appendChild(folder)
                     let elFolder = document.querySelector('.folder')
                     elFolder.style.left = posFolder + 'px'
                     setInterval(() => {
@@ -210,12 +210,12 @@ const cpu = {
             let shallPlay = Math.floor(Math.random() * 2)
             if (shallPlay === 1) {
 
-                // sur quelle ligne dois-je jouer?
-                // let randomLane = Math.floor(Math.random() * 5)
-                cpuClick.currentTarget = window
+                if (defenser.weapons[0].interval === 0) {
+                    // sur quelle ligne dois-je jouer?
+                    defenser.weapons[0].behavior(lane[place])
+                }
 
-                console.log(cpuClick)
-                defenser.weapons[0].behavior(cpuClick)
+                
 
             }
         }, 2000)
@@ -481,12 +481,13 @@ function defenseSkillsInit() {
     let corridors = document.querySelectorAll('div[class^=corridor]')
     for (let i = 0; i < lane.length; i++) {
         lane[i].addEventListener('click', (e) => {
+            let laneTargetted = e.currentTarget
             switch (defenser.activeWeapon) {
                 case 'dossier':
-                    defenser.weapons[0].behavior(e)
+                    defenser.weapons[0].behavior(laneTargetted)
                     break;
                 case 'gandalf':
-                    defenser.weapons[1].behavior(e)
+                    defenser.weapons[1].behavior(laneTargetted)
                     break;
 
                 default:
