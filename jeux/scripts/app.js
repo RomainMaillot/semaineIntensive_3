@@ -15,6 +15,7 @@ let go
 let jumpImg = document.querySelector('#jumpContainer img')
 let jumpstop, timer2, dir
 let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar2.png','./images/lifebar3.png']
+let reset = document.querySelector('#reset')
 
 const attacker = {
     score: 0,
@@ -58,13 +59,14 @@ const attacker = {
             init()
         }, 2000)
     },
-    lose: function () {
-        let defeat = document.querySelector('.defeat')
+    lose: function() {
+        // window.removeEventListener('keydown')
+        let youLose = document.querySelector('.youLose')
         mapWrapper.style.display = 'none'
         setTimeout( () => {
-          defeat.style.opacity = '1'
-        },50)
-        defeat.style.display = 'block'
+          youLose.style.opacity = '1'
+        },10)
+          youLose.style.display = 'block'
         clearInterval(go)
         if (character.classList.contains('characterL'))
         {
@@ -76,28 +78,23 @@ const attacker = {
         }
         left = 0
         character.parentNode.removeChild(character)
-        setTimeout(() => {
-          defeat.style.opacity = '0'
-        }, 1700)
-        setTimeout(() => { //gère toute la partie pendant le changement de niveau
-            initMap()
-            mapWrapper.style.display = 'grid'
-            defeat.style.display = 'none'
-            scrollTo(0, 0)
-
-            //enregistre le score du joueur 1
-            localStorage.setItem('score1', this.score)
-
-            if (parseInt(localStorage.getItem('bestScore')) < this.score ) {
-                localStorage.setItem('bestScore', this.score)
-            }
-
-            document.querySelector('.score').innerHTML = `score : ${this.score}`
-            clearInterval(chronoTime)
-            init()
-        }, 1500)
+        reset.addEventListener('click',
+        function(e){
+          e.preventDefault()
+          setTimeout( () => {
+            youLose.style.opacity = '0'
+          },1700)
+          setTimeout(() => { //gère toute la partie pendant le changement de niveau
+              initMap()
+              mapWrapper.style.display = 'grid'
+              youLose.style.display = 'none'
+              scrollTo(0, 0)
+              clearInterval(chronoTime)
+              init()
+          }, 2000)
+        })
     }
-}
+    }
 
 const defenser = {
     activeWeapon: null,
@@ -612,31 +609,6 @@ function resetMalus() {
     }
 }
 
-//fonction qui prend en charge la défaite
-
-function lose() {
-    console.log('t\'as perdu! et moi j\'ai gagné!')
-
-    // window.removeEventListener('keydown')
-    let youLose = document.querySelector('.youLose')
-    mapWrapper.style.display = 'none'
-    setTimeout( () => {
-      youLose.style.opacity = '1'
-    },10)
-      youLose.style.display = 'block'
-    clearInterval(go)
-    if (character.classList.contains('characterL'))
-    {
-      character.classList.remove('characterL')
-    }
-    if (character.classList.contains('character'))
-    {
-      character.classList.remove('character')
-    }
-    left = 0
-    character.parentNode.removeChild(character)
-}
-
 //à chaque seconde, recharge des compétences du boss et décompte du temps
 
 setInterval(() => {
@@ -649,11 +621,11 @@ setInterval(() => {
         // hudButtons[i].innerHTML = defenser.weapons[i].interval
     }
     if (chronometer === 0) {
-        lose()
+        attacker.lose()
     }
     if (attacker.health == 0)
     {
-      lose()
+      attacker.lose()
     }
 }, 1000)
 
