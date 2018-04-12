@@ -65,7 +65,7 @@ const defenser = {
     weapons: [
         {
             name: 'dossier',
-            interval: 30,
+            interval: 0,
             folderPlace: null,
             behavior: function (e) {
                 if (this.interval === 0) {
@@ -99,14 +99,14 @@ const defenser = {
                             }
                         }
                     }, 20)
-                    this.interval += 30
+                    this.interval += 5
                     hudButtons[0].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         },
         {
             name: 'gandalf',
-            interval: 10,
+            interval: 0,
             falseWallPos: 5000,
             gandalfPlace: null,
             behavior: function (e) {
@@ -131,31 +131,30 @@ const defenser = {
                         elGandalf.parentNode.removeChild(elGandalf)
                         this.falseWallPos = 5000
                     }, 10000)
-                    this.interval += 10
+                    this.interval += 5
                     hudButtons[1].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         },
         {
             name: 'ascenseur',
-            interval: 25,
+            interval: 0,
             behavior: function (e) {
                 if (this.interval === 0) {
                     defenser.activeWeapon = 'ascenseur'
-                    let strikedElevator = e.currentTarget
-                    strikedElevator.parentNode.childNodes[0].classList.add('unactivated')
-                    strikedElevator.parentNode.childNodes[1].classList.add('unactivated')
+                    let elevators = document.querySelectorAll('div[class^=corridor] img')
+                    for (let i = 0;i<elevators.length;i++)
+                    {
+                      elevators[i].classList.add('unactivated')
+                      elevators[i].setAttribute('src','images/elevator_problem.png')
+                      setTimeout(() => {
+                          elevators[i].classList.remove('unactivated')
 
-                    strikedElevator.parentNode.childNodes[0].src = 'images/elevator_problem.png'
-                    strikedElevator.parentNode.childNodes[1].src = 'images/elevator_problem.png'
-
-                    setTimeout(() => {
-                        strikedElevator.parentNode.childNodes[0].classList.remove('unactivated')
-                        strikedElevator.parentNode.childNodes[1].classList.remove('unactivated')
-
-                        strikedElevator.parentNode.childNodes[0].src = 'images/elevator_door.png'
-                        strikedElevator.parentNode.childNodes[1].src = 'images/elevator_door.png'
-                    }, 8000)
+                          elevators[i].setAttribute('src','images/elevator_door.png')
+                      }, 8000)
+                    }
+                    this.interval += 15
+                    hudButtons[2].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
         },
@@ -175,7 +174,7 @@ const defenser = {
                         timer.classList.remove('timerAccelerated')
                         this.isActive = false
                     }, 6000)
-                    this.interval += 25
+                    this.interval += 15
                     hudButtons[3].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
@@ -195,7 +194,7 @@ const defenser = {
                         speed = 4
                         moveCharacater()
                     }, 5000)
-                    this.interval += 25
+                    this.interval += 10
                     hudButtons[4].style.animation = 'reload ' + this.interval +'s linear 1'
                 }
             }
@@ -240,7 +239,7 @@ function init(){
   //remet à 0 les timer des compétences du boss
   initWeapons()
   //initialise le chrono
-  chronometer = 75
+  chronometer = 50
   chronoSet(1000)
   attacker.health = 3
   lifebar.setAttribute('src', './images/lifebar4.png')
@@ -495,18 +494,6 @@ function defenseSkillsInit() {
             }
         })
     }
-    for (let i = 0; i < corridors.length; i++) {
-        corridors[i].childNodes[0].addEventListener('click', (e) => {
-            if (defenser.activeWeapon = 'ascenseur') {
-                defenser.weapons[2].behavior(e)
-            }
-        })
-        corridors[i].childNodes[1].addEventListener('click', (e) => {
-            if (defenser.activeWeapon = 'ascenseur') {
-                defenser.weapons[2].behavior(e)
-            }
-        })
-    }
 }
 
 // initialise les écouteurs d'événements du HUD
@@ -523,6 +510,7 @@ function hud() {
     hudButtons[2].addEventListener('click', (e) => {
         e.preventDefault()
         defenser.activeWeapon = 'ascenseur'
+        defenser.weapons[2].behavior()
     })
     hudButtons[3].addEventListener('click', (e) => {
         e.preventDefault()
