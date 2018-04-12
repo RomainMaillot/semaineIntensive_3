@@ -1,0 +1,122 @@
+body{
+  background: url("../images/");
+  margin:0;
+  padding:0;
+  font-family: Gugi;
+
+}
+
+
+.background{
+width:100;
+display:flex;
+height:85vh;
+filter: blur(4px);
+}
+
+
+.box{
+  background: black;
+  border-radius: 100px;
+  border:none;
+  cursor: pointer;
+  position:absolute;
+  left:50%;
+  top: 50%;
+  box-shadow: 7px 7px 0px black;
+  transform:translate(-50%,-50%);
+  width: 600px;
+  height: 160px;
+  box-sizing: border-box;
+  padding: 3px;
+
+
+}
+
+.box:active{
+  transform: translateY(-70px) translateX(-290px);
+  box-shadow: none;
+}
+
+
+.button{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 100px;
+  overflow: hidden;
+
+}
+
+.container  {
+  display:flex;
+  justify-content: center;
+  align-items: space-around;
+  flex-direction:column;
+  transition: 0.5s all ease-in-out;
+  transform: scale(1);
+  opacity: 1;
+}
+.transition{
+  opacity:0.5;
+  transform:scale(4);
+}
+
+
+h2{
+  position: absolute;
+  font-size: 5em;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  color: black;
+  z-index: 100;
+  margin:0;
+  padding:0;
+  letter-spacing: 3px;
+  transition: .5s;
+}
+
+
+h1{
+  font-size: 3em;
+  font-family: Gugi;
+  font-weight: lighter;
+  position: absolute;
+  top: 20%;
+  width:100%;
+  text-align: center;
+}
+
+.life{
+  color: #e84118;
+  font-weight: bold;
+  border: 3px solid #e84118;
+  padding: 5px;
+  margin: 5px;
+}
+
+footer {
+  width: 100%;
+  height: 13.1vh;
+  background-color: black;
+  font-family: Roboto, Arial, sans-serif ;
+  bottom:0;
+  color: #FFF;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.footer{
+    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right{
+  padding-right: 10px;
+}
