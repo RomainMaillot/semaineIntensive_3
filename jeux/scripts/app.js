@@ -109,18 +109,18 @@ const defenser = {
             interval: 0,
             falseWallPos: 5000,
             gandalfPlace: null,
-            behavior: function (e) {
+            behavior: function (laneTargetted, mousePos) {
                 if (this.interval === 0) {
-                    console.log(e.pageX)
+                    console.log(mousePos)
                     defenser.activeWeapon = 'gandalf'
 
                     let gandalf = document.createElement('div')
-                    let posGandalf = e.pageX
+                    let posGandalf = mousePos
                     gandalf.classList.add('gandalfPers')
 
                     //enregistrement de la place de Gandalf
-                    this.gandalfPlace = parseInt(e.currentTarget.className.replace('lane', '')) - 1
-                    e.currentTarget.appendChild(gandalf)
+                    this.gandalfPlace = parseInt(laneTargetted.className.replace('lane', '')) - 1
+                    laneTargetted.appendChild(gandalf)
                     let elGandalf = document.querySelector('.gandalfPers')
                     elGandalf.style.left = posGandalf + 'px'
 
@@ -214,7 +214,10 @@ const cpu = {
                     // sur quelle ligne dois-je jouer?
                     defenser.weapons[0].behavior(lane[place])
                 }
-
+                if (defenser.weapons[1].interval === 0) {
+                    // sur quelle ligne dois-je jouer?
+                    defenser.weapons[1].behavior(lane[place], window.innerWidth + left)
+                }
                 
 
             }
@@ -482,12 +485,13 @@ function defenseSkillsInit() {
     for (let i = 0; i < lane.length; i++) {
         lane[i].addEventListener('click', (e) => {
             let laneTargetted = e.currentTarget
+            let mousePos = e.pageX
             switch (defenser.activeWeapon) {
                 case 'dossier':
                     defenser.weapons[0].behavior(laneTargetted)
                     break;
                 case 'gandalf':
-                    defenser.weapons[1].behavior(laneTargetted)
+                    defenser.weapons[1].behavior(laneTargetted, mousePos)
                     break;
 
                 default:
