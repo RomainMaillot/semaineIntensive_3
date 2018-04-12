@@ -101,10 +101,25 @@ div[class^=lane], div[class^=corridor]{
     position: relative;
 }
 
-div[class^=lane] {
-    background-image: url('../images/lane_background.png');
+div[class^=lane1] {
+    background-image: url('../images/lane1_background.png');
     background-size: contain;
 }
+
+div[class^=lane2] {
+    background-image: url('../images/lane2_background.png');
+    background-size: contain;
+}
+
+div[class^=lane3] {
+    background-image: url('../images/lane3_background.png');
+    background-size: contain;
+	}
+
+div[class^=lane4] {
+   background-image: url('../images/lane4_background.png');
+   background-size: contain;
+ 	}
 
 div[class^=corridor]{
     z-index: 1000;
