@@ -251,6 +251,18 @@ div[class^=corridor] img:nth-of-type(2){
     display: inline-block;
 }
 
+div.menu_button{
+	width:20px;
+}
+
+.menu_button{
+	width:10px;
+	justify-content:space-between;
+}
+.menu_underline{
+	text-decoration:none;
+}
+
 /* RELATIF AUX POUVOIRS */
 
 .folder {
