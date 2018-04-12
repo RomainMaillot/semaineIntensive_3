@@ -4,6 +4,9 @@ let site2 = document.querySelector('.site2')
 let button = document.querySelector('.box')
 localStorage.setItem('gameMode', '0')
 
+let music = new Audio('./music/escapelifemusic.mp3')
+music.play()
+
 button.addEventListener('click', (e) =>  {
   e.preventDefault()
   container.classList.add('transition')

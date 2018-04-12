@@ -58,6 +58,7 @@ a {
   transform: scale(1);
   opacity: 1;
   height: 60vh;
+  margin-bottom: 25vh;
 }
 .transition{
   opacity:0.5;
