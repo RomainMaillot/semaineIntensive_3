@@ -30,7 +30,7 @@ const worldImages = {
     portals: [
         './images/elevator_door.png',
         './images/elevator_door2.png',
-        './images/elevator_problem.png', 
+        './images/elevator_problem.png',
     ]
 }
 
@@ -156,13 +156,16 @@ const attacker = {
           character.classList.remove('character')
         }
         left = 0
-        character.parentNode.removeChild(character)
+        if (character.parentNode != null)
+        {
+          character.parentNode.removeChild(character)
+        }
         let defeatMenuItems = document.querySelectorAll('.youLose_text a')
         for (let i = 0; i < defeatMenuItems.length; i++) {
             defeatMenuItems[i].addEventListener('mouseover', () => {
                 sounds.menuItemSound.play()
             })
-            
+
         }
         reset.addEventListener('click',
         function(e){
@@ -399,7 +402,7 @@ const gameData = {
       for (let i = 0; i < lane.length; i++) {
         lane[i].style.background = `url(${worldImages.lanes[i]})`
         lane[i].style.backgroundSize = 'contain'
-        
+
     }
     // } else if (gameData.world === 2){
     //     for (let i = 0; i < lane.length; i++) {
@@ -798,5 +801,5 @@ function chronoSet (timerSpeed) {
 }
 
 function stopSounds() {
-    
+
 }
