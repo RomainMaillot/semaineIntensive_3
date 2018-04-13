@@ -1,5 +1,3 @@
-// import { attacker, defenser } from './playersData.js'
-
 let character = document.createElement('div')
 let hudButtons = document.querySelectorAll('.skill')
 let lane = document.querySelectorAll('div[class^=lane]')
@@ -17,19 +15,38 @@ let jumpstop, timer2, dir
 let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar3.png']
 let reset = document.querySelector('#reset')
 
+//lancement de la musique
+
+let music = new Audio('../music/escapelifemusic.mp3')
+music.loop = true
+music.play()
+
 // définition des sons
 
-let elevatorSound = new Audio('./sounds/elevator.mp3')
-let jumpSound = new Audio('./sounds/jump.mp3')
-let folderSound = new Audio('./sounds/folder.mp3')
-let impactSound = new Audio('./sounds/impact.mp3')
-let gandalfSound = new Audio('./sounds/gandalf.mp3')
-let elevatorBlockedSound = new Audio('./sounds/elevatorBlocked.mp3')
-let alarmSound = new Audio('./sounds/alarm.mp3')
-let timeSlowSound = new Audio('./sounds/slowdown.mp3')
-let gameoverSound = new Audio('./sounds/gameover.mp3')
-let winSound = new Audio('./sounds/win.mp3')
-let menuItemSound = new Audio('./sounds/menuitem.mp3')
+const sounds = {
+    elevatorSound: new Audio('./sounds/elevator.mp3'),
+    jumpSound: new Audio('./sounds/jump.mp3'),
+    folderSound: new Audio('./sounds/folder.mp3'),
+    impactSound: new Audio('./sounds/impact.mp3'),
+    gandalfSound: new Audio('./sounds/gandalf.mp3'),
+    elevatorBlockedSound: new Audio('./sounds/elevatorBlocked.mp3'),
+    alarmSound: new Audio('./sounds/alarm.mp3'),
+    timeSlowSound: new Audio('./sounds/slowdown.mp3'),
+    gameoverSound: new Audio('./sounds/gameover.mp3'),
+    winSound: new Audio('./sounds/win.mp3'),
+    menuItemSound: new Audio('./sounds/menuitem.mp3'),
+    stopSounds: function () {
+        for (sound in this) {
+            this[sound].muted = true
+        }
+    },
+    setSounds: function () {
+        for (sound in this) {
+            this[sound].muted = false
+        }
+    }
+}
+
 
 const attacker = {
     score: 0,
@@ -58,6 +75,7 @@ const attacker = {
         setTimeout( () => {
           gg.style.opacity = '0'
         },1700)
+        sounds.winSound.play()
         setTimeout(() => { //gère toute la partie pendant le changement de niveau
             initMap()
             mapWrapper.style.display = 'grid'
@@ -77,6 +95,11 @@ const attacker = {
         // window.removeEventListener('keydown')
         let youLose = document.querySelector('.youLose')
         mapWrapper.style.display = 'none'
+        sounds.gameoverSound.play()
+        setTimeout(() => {
+            sounds.stopSounds()
+            sounds.menuItemSound.muted = false
+        }, 4000)
         if (gameData.gamemode == 1)
         {
           if (game == 1)
@@ -120,7 +143,7 @@ const attacker = {
         let defeatMenuItems = document.querySelectorAll('.youLose_text a')
         for (let i = 0; i < defeatMenuItems.length; i++) {
             defeatMenuItems[i].addEventListener('mouseover', () => {
-                menuItemSound.play()
+                sounds.menuItemSound.play()
             })
             
         }
@@ -190,13 +213,13 @@ const defenser = {
                             attacker.health -= 1
                             console.log(attacker.health)
                             lifebar.setAttribute('src', lifebarImg[attacker.health])
-                            impactSound.play()
+                            sounds.impactSound.play()
                             if(elFolder.parentNode != null)
                             {
                               elFolder.parentNode.removeChild(elFolder)
                             }
                         } else {
-                            folderSound.play()
+                            sounds.folderSound.play()
                         }
                     }, 20)
                     this.interval += 4
@@ -241,7 +264,7 @@ const defenser = {
                     setTimeout(() => {
                         hudButtons[1].style.animation = ''
                     }, this.interval * 1000)
-                    gandalfSound.play()
+                    sounds.gandalfSound.play()
                 }
             }
         },
@@ -268,7 +291,7 @@ const defenser = {
                     setTimeout(() => {
                         hudButtons[2].style.animation = ''
                     }, this.interval * 1000)
-                    elevatorBlockedSound.play()
+                    sounds.elevatorBlockedSound.play()
                 }
             }
         },
@@ -293,7 +316,7 @@ const defenser = {
                     setTimeout(() => {
                         hudButtons[3].style.animation = ''
                     }, this.interval * 1000)
-                    alarmSound.play()
+                    sounds.alarmSound.play()
                 }
             }
         },
@@ -317,7 +340,7 @@ const defenser = {
                     setTimeout(() => {
                         hudButtons[4].style.animation = ''
                     }, this.interval * 1000)
-                    timeSlowSound.play()
+                    sounds.timeSlowSound.play()
                 }
             }
         }
@@ -398,8 +421,9 @@ function init(){
   {
     cpu.play()
   }
-  let music = new Audio('../music/escapelifemusic.mp3')
-  music.play()
+  setTimeout(() => {
+    sounds.setSounds()
+  }, 4050)
 }
 
 function moveCharacater () {
@@ -536,7 +560,7 @@ function keyHandler (e) {
         if (!elevatorsDown[i].classList.contains('unactivated')){//déplace le personnage à la ligne inférieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
             character.parentNode.removeChild(character)
             place += 1
-            elevatorSound.play()
+            sounds.elevatorSound.play()
             lane[place].appendChild(character)}
       }
     }
@@ -548,7 +572,7 @@ function keyHandler (e) {
         if (!elevatorsUp[i].classList.contains('unactivated')){//déplace le personnage à la ligne supérieur en le supprimant puis en le recréant à la ligne inférieur si un ascenceur est présent
             character.parentNode.removeChild(character)
             place -= 1
-            elevatorSound.play()
+            sounds.elevatorSound.play()
             lane[place].appendChild(character)}
       }
     }
@@ -562,7 +586,7 @@ function keyHandler (e) {
       jumpImg.classList.add('opacity')
       clearInterval(timer2)
       jumpTimer(8)
-      jumpSound.play()
+      sounds.jumpSound.play()
     }
     if (e.keyCode == 81 && character.parentNode != lane[3] && attacker.hasJump)
     {
@@ -574,7 +598,7 @@ function keyHandler (e) {
       jumpImg.classList.add('opacity')
       clearInterval(timer2)
       jumpTimer(8)
-      jumpSound.play()
+      sounds.jumpSound.play()
     }
 }
 
@@ -746,6 +770,6 @@ function chronoSet (timerSpeed) {
     }, timerSpeed)
 }
 
-function swapPlayer () {
-
+function stopSounds() {
+    
 }
