@@ -15,6 +15,25 @@ let jumpstop, timer2, dir
 let lifebar = document.querySelector('#lifebar'), lifebarImg = ['./images/lifebar1.png','./images/lifebar3.png']
 let reset = document.querySelector('#reset')
 
+//différentes images
+
+const worldImages = {
+    lanes: [
+        './images/lane1_background.png',
+        './images/lane2_background.png',
+        './images/lane3_background.png',
+        './images/lane4_background.png'
+    ],
+    obstacles: [
+        './images/folder.png',
+    ],
+    portals: [
+        './images/elevator_door.png',
+        './images/elevator_door2.png',
+        './images/elevator_problem.png', 
+    ]
+}
+
 //lancement de la musique
 
 let music = new Audio('../music/escapelifemusic.mp3')
@@ -30,7 +49,7 @@ const sounds = {
     impactSound: new Audio('./sounds/impact.mp3'),
     gandalfSound: new Audio('./sounds/gandalf.mp3'),
     elevatorBlockedSound: new Audio('./sounds/elevatorBlocked.mp3'),
-    alarmSound: new Audio('./sounds/alarm.mp3'),
+    alarmSound: new Audio('./sounds/alarmvol.mp3'),
     timeSlowSound: new Audio('./sounds/slowdown.mp3'),
     gameoverSound: new Audio('./sounds/gameover.mp3'),
     winSound: new Audio('./sounds/win.mp3'),
@@ -46,7 +65,6 @@ const sounds = {
         }
     }
 }
-
 
 const attacker = {
     score: 0,
@@ -90,6 +108,7 @@ const attacker = {
             clearInterval(chronoTime)
             init()
         }, 2000)
+        gameData.world += 1
     },
     lose: function() {
         // window.removeEventListener('keydown')
@@ -106,11 +125,9 @@ const attacker = {
           {
             document.querySelector('#reset').innerHTML = 'swap'
             localStorage.setItem('scorePlayer1',attacker.score)
-            console.log('game 1')
           }
           if (game == 2)
           {
-            console.log('game 2')
             document.querySelector('#reset').innerHTML = 'retry'
             if (attacker.score > localStorage.getItem('scorePlayer1'))
             {
@@ -211,7 +228,6 @@ const defenser = {
                         }
                         else if (posFolder < left + 35 && posFolder + elFolder.offsetWidth > left + character.offsetWidth && this.folderPlace === place) {
                             attacker.health -= 1
-                            console.log(attacker.health)
                             lifebar.setAttribute('src', lifebarImg[attacker.health])
                             sounds.impactSound.play()
                             if(elFolder.parentNode != null)
@@ -238,7 +254,6 @@ const defenser = {
             gandalfPlace: null,
             behavior: function (laneTargetted, mousePos) {
                 if (this.interval === 0) {
-                    console.log(mousePos)
                     defenser.activeWeapon = 'gandalf'
 
                     let gandalf = document.createElement('div')
@@ -379,15 +394,27 @@ const gameData = {
   gamemode: localStorage.getItem('gameMode'),
   world: 1,
   background: function () {
-    let backgrounds = ['./images/lane1_background.png','./images/lane2_background.png','./images/lane3_background.png','./images/lane4_background.png']
-    let lanes = document.querySelectorAll('div[class^=lane]')
-    if (gameData.world == 1)
+    if (gameData.world === 1)
     {
-      for (let i = 0;i<lanes.length;i++)
-      {
-        lanes[i].style.background = `url(${backgrounds[i]})`
-        lanes[i].style.backgroundSize = 'contain'
-      }
+      for (let i = 0; i < lane.length; i++) {
+        lane[i].style.background = `url(${worldImages.lanes[i]})`
+        lane[i].style.backgroundSize = 'contain'
+        
+    }
+    // } else if (gameData.world === 2){
+    //     for (let i = 0; i < lane.length; i++) {
+    //         lane[i].style.background = `url(${worldImages.lanes[i + 4]})`
+    //         lane[i].style.backgroundSize = 'contain'
+    //     }
+    // }
+
+    // rajoutez vos background ici...
+
+    } else {
+        for (let i = 0; i < lane.length; i++) {
+            lane[i].style.background = `url(${worldImages.lanes[i]})`
+            lane[i].style.backgroundSize = 'contain'
+        }
     }
   }
 }
@@ -766,7 +793,7 @@ function chronoSet (timerSpeed) {
         if (chronometer > 0) {
             chronometer -= 1
         }
-        document.querySelector('.timer').innerHTML = `Temps restant : ${chronometer} sec`
+        document.querySelector('.timer').innerHTML = `Time left : ${chronometer} sec`
     }, timerSpeed)
 }
 
